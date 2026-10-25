@@ -54,6 +54,7 @@ Owner mode saves to the default branch, so Pages must publish from that branch f
 - **Films:** edit `films.json`. Each film has an `id`, `title`, `short` (card label), `type`, `length`, `format` (`wide` or `vertical`), `src` and `poster`.
   - Cards appear in list order and cycle through pink, blue, orange, green and white.
   - `"link"` adds a "Case study" link to that card.
+  - `"section": "saas"` puts a film in "SaaS & product demos" instead of sorting it by shape. The owner form's **Section** picker sets this.
 - **Instagram / YouTube buttons:** uncomment them in the contact section of `index.html` and paste in your links.
 - **Contact form:** opens the visitor's email app with the enquiry addressed to the email in the form's `action`.
 - **Colours and fonts:** the variables at the top of `assets/style.css`.

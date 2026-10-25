@@ -414,3 +414,10 @@ h1, h2, h3, p, figure { margin: 0; }
 .owner-choice label { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 600; cursor: pointer; }
 .owner-choice input { width: 20px; height: 20px; accent-color: var(--ink); }
 .owner-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* SaaS & product demos */
+.saas { background: var(--orange); border-top: var(--line); padding: var(--section) 0; }
+.saas .section-head { margin-bottom: 16px; }
+.saas .tag-sticker { background: var(--white); transform: rotate(-3deg); }
+.saas-lead { max-width: 620px; margin-bottom: 40px; }
+.saas-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }

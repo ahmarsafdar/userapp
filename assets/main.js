@@ -2,6 +2,7 @@
   'use strict';
 
   const CARD_COLORS = ['pink', 'blue', 'orange', 'green', 'white'];
+  const SAAS_COLORS = ['white', 'blue', 'green', 'pink'];
   const REEL_COLORS = ['white', 'yellow', 'pink', 'green'];
   const TILTS = ['0deg', '1deg', '0deg', '-1deg'];
 
@@ -82,16 +83,18 @@
     });
   }
 
-  // ----- Work and reels, built from films.json -----
+  // ----- Work, SaaS demos and reels, built from films.json -----
   const workGrid = document.getElementById('work-grid');
   if (workGrid) {
+    const saasGrid = document.getElementById('saas-grid');
+    const saasSection = document.getElementById('saas');
     const reelGrid = document.getElementById('reel-grid');
     const reelsSection = document.getElementById('reels');
     const projectCount = document.getElementById('project-count');
     let films = [];
 
-    function card(film, i, vertical) {
-      const colors = vertical ? REEL_COLORS : CARD_COLORS;
+    function card(film, i, colors) {
+      const vertical = film.format === 'vertical';
       const media = el('button', { type: 'button', class: 'card-media', 'aria-label': 'Play ' + film.title }, [
         el('img', { src: film.poster, alt: '', loading: 'lazy' }),
         el('span', { class: 'card-play', 'aria-hidden': 'true' }, [playIcon()])
@@ -113,11 +116,16 @@
     }
 
     function render() {
-      const wide = films.filter((f) => f.format !== 'vertical');
-      const tall = films.filter((f) => f.format === 'vertical');
+      // Films marked "section": "saas" go in the SaaS section; the rest go by shape.
+      const saas = films.filter((f) => f.section === 'saas');
+      const rest = films.filter((f) => f.section !== 'saas');
+      const wide = rest.filter((f) => f.format !== 'vertical');
+      const tall = rest.filter((f) => f.format === 'vertical');
       projectCount.textContent = films.length + (films.length === 1 ? ' project' : ' projects');
-      workGrid.replaceChildren.apply(workGrid, wide.map((f, i) => card(f, i, false)));
-      reelGrid.replaceChildren.apply(reelGrid, tall.map((f, i) => card(f, i, true)));
+      workGrid.replaceChildren.apply(workGrid, wide.map((f, i) => card(f, i, CARD_COLORS)));
+      saasGrid.replaceChildren.apply(saasGrid, saas.map((f, i) => card(f, i, SAAS_COLORS)));
+      reelGrid.replaceChildren.apply(reelGrid, tall.map((f, i) => card(f, i, REEL_COLORS)));
+      saasSection.hidden = saas.length === 0;
       reelsSection.hidden = tall.length === 0;
       document.dispatchEvent(new CustomEvent('portfolio:render'));
     }
