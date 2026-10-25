@@ -10,24 +10,26 @@ Everything is code, so any text, colour, timing or clip can be changed and the v
 | `clips.txt` | Which part of which film each shot uses (`id  film  start  length  width`) |
 | `render.js` | Renders frames of `intro.html` with Playwright |
 | `synth.py` | The original 120 BPM music and every sound effect, timed to the cuts |
+| `vo.py` | The voiceover: the script and its cues, the AI voice, and the mix that dips the music under it |
 | `build.sh` | Runs all of it and writes the MP4 and its poster |
 
 ## Rebuild
 
 ```sh
 npm i playwright && npx playwright install chromium
-pip install numpy scipy soundfile
+pip install numpy scipy soundfile kokoro-onnx
 tools/intro/build.sh
 ```
 
-It takes about 5 minutes on 4 cores. Work files go in `tools/intro/build/`, which git ignores.
+It takes about 5 minutes on 4 cores. The first run also downloads the 350 MB voice model. Work files go in `tools/intro/build/`, which git ignores.
 
 ## Changing things
 
 - **Words:** edit the text in `intro.html`. The site's look comes from the colour variables at the top of its `<style>`.
 - **Timing:** each scene is a `scene(id, start, end, layer, fn)` call. Cuts and pops land on the 120 BPM beat grid (every 0.5 s); move the matching cue in `synth.py` if you move a beat.
 - **Footage:** change a line in `clips.txt`, then the id it uses in `intro.html`.
-- **Music:** to use a licensed track instead, pick one at 120 BPM with its drop at 0:04, and swap it for `mix.wav` in the encode step. `synth.py` also writes the effects alone to `sfx.wav` for laying over it.
+- **Voiceover:** edit the lines and their cue times in `vo.py`. A line that's too long for its cue is sped up, to at most 1.25×. `VO=off tools/intro/build.sh` builds it without a voice.
+- **Music:** to use a licensed track instead, pick one at 120 BPM with its drop at 0:04 and put it in place of `music.wav` in the work folder. `vo.py` lays the voice and the effects (`sfx.wav`) over it.
 
 ## How it was designed
 
@@ -59,16 +61,22 @@ It was reverse-engineered from a 49-second Fiverr studio promo, then rebuilt aro
 - It ends on a clear next step instead of 7 seconds of logo.
 - No email or links appear in the video, so it's safe to upload to Fiverr.
 
-## Voiceover script (optional)
+## Voiceover
 
-To add your own voice, record these over the finished cut:
+The voice is an AI voice: Kokoro's `am_michael`, chosen to match the pitch of the talking-head intro (both around 110–115 Hz). Your name is spelled out phonetically as "AH-mahr". The music dips by 8 dB while it speaks.
 
 | Time | Line |
 | --- | --- |
 | 0:00 | You've got one point seven seconds to stop the scroll. |
 | 0:04 | Hey, I'm Ahmar. I make ads people actually watch. |
-| 0:08 | Commercials, concept films, reels, motion graphics and SaaS demos. |
+| 0:08 | Here's the good stuff. |
+| 0:14 | Commercials, concept films, reels, SaaS demos, even color and sound. |
 | 0:18 | Hooks that stop the scroll. Stories people remember. Endings that make them act. |
-| 0:22 | And launch videos that make software look simple. |
-| 0:32 | Five years editing, back within a day, in Urdu or English. |
-| 0:36 | Got footage? Let's talk. |
+| 0:22 | Building an app? I make launch videos that make people want to sign up. |
+| 0:28 | And vertical edits, made for the scroll. |
+| 0:32 | Five years editing. Back within a day. In Urdu or English. |
+| 0:36 | Got footage? Let's talk. Send me a message. |
+| 0:40 | Let's make yours next. |
+| 0:42 | I'm Ahmar, freelance video editor. |
+
+To use your own voice, record these lines over the video so the recording starts at 0:00, then run `VO_FILE=my-voice.wav tools/intro/build.sh`.
