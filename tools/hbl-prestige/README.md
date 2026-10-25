@@ -27,7 +27,9 @@ tools/hbl-prestige/build.sh
 
 `build.sh` installs three.js into this folder on first run. Work files go in `tools/hbl-prestige/build/`, which git ignores.
 
-It takes about an hour on 4 CPU cores. The film renders on Chromium's software GPU (SwiftShader), so it looks the same on any machine. `SIZE=1920x1080 tools/hbl-prestige/build.sh` skips the supersampling and takes about half as long.
+It takes about 40 minutes on 4 CPU cores. The film renders on Chromium's software GPU (SwiftShader), so it looks the same on any machine. `SIZE=1920x1080 tools/hbl-prestige/build.sh` skips the supersampling and takes about half as long.
+
+`tools/hbl-prestige/build.sh encode` redoes only the last step, encoding the frames and soundtrack already in the work folder, in about a minute.
 
 ## Changing things
 
@@ -35,7 +37,7 @@ It takes about an hour on 4 CPU cores. The film renders on Chromium's software G
 - **Number, expiry, CVV and the rest of the print:** `frontArtwork` and `backArtwork` in `src/card.js`, laid out in millimetres on an ISO card (85.60 × 53.98 mm).
 - **Timing:** `TIMELINE` in `src/shots.js`. From 0:06.1 the cuts land every two beats of the 128 BPM score. If you move a cut, move its time at the top of `synth.py` too.
 - **Look of a shot:** its `update()` returns the lens settings (focus, aperture, exposure, contrast, fade).
-- **Music:** to use a licensed track instead, put it in place of `mix.wav` in the work folder and run only the encode step of `build.sh`.
+- **Music:** to use a licensed track instead, put it in place of `mix.wav` in the work folder and run `build.sh encode`.
 
 ## How it was designed
 
@@ -67,4 +69,4 @@ It was reverse-engineered from Revolut's 22-second "Visual Exploration" card fil
 - The HBL letters were measured from the artwork and rebuilt as solid shapes, keeping their quirks: the H crossbar and the B's middle bar stop short of the stem, and the L's foot is cut on a slant.
 - The score is original but follows the reference's structure: a dark drone, a sub hit when the light comes on, a riser into an impact at 0:06.1, a 128 BPM pulse that cuts every two beats, a drop to air for the hero card, and a soft resolve under the logo.
 
-**Rendering notes:** frames are rendered at 2560×1440 and scaled to 1080p so the chip's bevels and the small print don't shimmer. Anisotropic texture filtering is off because SwiftShader returns wrong samples with it on.
+**Rendering notes:** frames are rendered at 2560×1440 and scaled to 1080p so the chip's bevels and the small print don't shimmer. Anisotropic texture filtering is off because SwiftShader returns wrong samples with it on. The MP4 is H.264 at CRF 21 capped at 6 Mbps, which comes out near 4 Mbps (12 MB). That matched an 8 Mbps encode in side-by-side crops; from CRF 23 the grain on the dark card face starts to mottle.
