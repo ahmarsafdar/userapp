@@ -1,6 +1,6 @@
 # Intro reel
 
-The source of `media/films/intro-reel.mp4`: a 46-second, 1080p60 motion-graphics intro built from the films in `media/films`. The hero's "Watch my intro" buttons play it.
+The source of `media/films/intro-reel.mp4`: a 46-second, 1080p60 motion-graphics intro built from the films in `media/films`. The hero's "Watch my intro" buttons play it, and it's the first card in "The good stuff".
 
 Everything is code, so any text, colour, timing or clip can be changed and the video rebuilt.
 

@@ -83,10 +83,11 @@
     });
 
     // The hero buttons play the intro reel; the About section keeps the talking-head hello.
+    const reel = document.getElementById('intro-reel');
     document.querySelectorAll('[data-intro]').forEach((btn) => {
       btn.addEventListener('click', () => openPlayer({
         title: 'Ahmar — Intro reel', type: 'Motion graphics intro', length: '0:46', format: 'wide',
-        src: 'media/films/intro-reel.mp4', poster: 'media/posters/intro-reel.jpg'
+        src: reel.getAttribute('src'), poster: reel.getAttribute('poster')
       }));
     });
 

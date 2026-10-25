@@ -56,7 +56,7 @@ Owner mode saves to the default branch, so Pages must publish from that branch f
   - Cards appear in list order and cycle through pink, blue, orange, green and white.
   - `"link"` adds a "Case study" link to that card.
   - `"section": "saas"` puts a film in "SaaS & product demos" instead of sorting it by shape. The owner form's **Section** picker sets this.
-- **Intro videos:** the hero's "Watch my intro" buttons play `media/films/intro-reel.mp4` (rebuild it with `tools/intro/build.sh`). The About section plays `media/films/intro.mp4`.
+- **Intro videos:** the hero's "Watch my intro" buttons play the hidden `#intro-reel` video in `index.html`, `media/films/intro-reel.mp4` (rebuild it with `tools/intro/build.sh`). It's also the first card in "The good stuff". The About section plays `media/films/intro.mp4`.
 - **Instagram / YouTube buttons:** uncomment them in the contact section of `index.html` and paste in your links.
 - **Contact form:** opens the visitor's email app with the enquiry addressed to the email in the form's `action`.
 - **Colours and fonts:** the variables at the top of `assets/style.css`.
