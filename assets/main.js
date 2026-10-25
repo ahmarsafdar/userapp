@@ -42,13 +42,21 @@
   });
 
   // ----- Only one video plays at a time (capture, so it covers videos rendered later) -----
+  // Silent looping videos marked data-ambient are left alone and never pause others.
   document.addEventListener('play', (e) => {
     const video = e.target;
-    if (!(video instanceof HTMLVideoElement)) return;
-    document.querySelectorAll('video').forEach((other) => {
+    if (!(video instanceof HTMLVideoElement) || video.hasAttribute('data-ambient')) return;
+    document.querySelectorAll('video:not([data-ambient])').forEach((other) => {
       if (other !== video) other.pause();
     });
   }, true);
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('video[data-ambient]').forEach((video) => {
+      video.removeAttribute('autoplay');
+      video.pause();
+    });
+  }
 
   // ----- Pop-up player -----
   const player = document.getElementById('player');
@@ -79,6 +87,14 @@
       btn.addEventListener('click', () => openPlayer({
         title: 'Meet Ahmar', type: 'A quick hello', length: '1:12', format: 'wide',
         src: intro.getAttribute('src'), poster: intro.getAttribute('poster')
+      }));
+    });
+
+    document.querySelectorAll('[data-ident]').forEach((btn) => {
+      const loop = btn.querySelector('video');
+      btn.addEventListener('click', () => openPlayer({
+        title: 'My animated logo', type: 'Logo animation', length: '0:05', format: 'wide',
+        src: loop.getAttribute('src'), poster: loop.getAttribute('poster')
       }));
     });
   }
