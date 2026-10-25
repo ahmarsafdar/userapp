@@ -1,23 +1,30 @@
 #!/usr/bin/env bash
-# Rebuilds media/films/intro-reel.mp4 and its poster from the films in media/films.
+# Builds an intro video and its poster from the films in media/films.
+#   tools/intro/build.sh                    the intro reel (media/films/intro-reel.mp4)
+#   tools/intro/build.sh tools/saas-intro   the SaaS intro (media/films/saas-intro.mp4)
+# A project folder holds intro.html, clips.txt, synth.py, project.conf and, optionally, lines.txt.
 # Needs: ffmpeg, Node with Playwright (Chromium), Python 3 with numpy, scipy, soundfile and kokoro-onnx.
 # VO=off builds it without the voiceover; VO_FILE=recording.wav uses your own voice instead of the AI one.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$HERE/../.." && pwd)"
-WORK="${WORK:-$HERE/build}"
+PROJ="$(cd "${1:-$HERE}" && pwd)"
+# shellcheck source=project.conf
+source "$PROJ/project.conf"
+WORK="${WORK:-$PROJ/build}"
 FPS=60
-DUR=46
 WORKERS="${WORKERS:-4}"
 
 mkdir -p "$WORK/clips" "$WORK/frames"
-cp "$HERE/intro.html" "$HERE/render.js" "$WORK/"
+cp "$PROJ/intro.html" "$HERE/render.js" "$WORK/"
 cp -r "$HERE/fonts" "$WORK/"
 cp "$ROOT/media/portrait.jpg" "$WORK/"
+rm -f "$WORK/lines.txt"
+[ -f "$PROJ/lines.txt" ] && cp "$PROJ/lines.txt" "$WORK/"
 
 echo "1/4 Cutting footage into frames"
-grep -v '^#' "$HERE/clips.txt" | while read -r id src ss dur w; do
+grep -v '^#' "$PROJ/clips.txt" | while read -r id src ss dur w; do
   mkdir -p "$WORK/clips/$id"
   ffmpeg -v error -y -ss "$ss" -t "$dur" -i "$ROOT/media/films/$src.mp4" \
     -vf "fps=30,scale=$w:-2:flags=lanczos" -q:v 3 "$WORK/clips/$id/%04d.jpg" < /dev/null
@@ -29,16 +36,15 @@ print('window.CLIPS = ' + json.dumps({c: len(os.listdir(os.path.join(d, c))) for
 " "$WORK/clips" > "$WORK/clips.js"
 
 echo "2/4 Rendering frames"
-TOTAL=$((DUR * FPS))
-PER=$(((TOTAL + WORKERS - 1) / WORKERS))
+PER=$(((FRAMES + WORKERS - 1) / WORKERS))
 for ((w = 0; w < WORKERS; w++)); do
-  FROM=$((w * PER)); TO=$(((w + 1) * PER)); ((TO > TOTAL)) && TO=$TOTAL
+  FROM=$((w * PER)); TO=$(((w + 1) * PER)); ((TO > FRAMES)) && TO=$FRAMES
   node "$WORK/render.js" "$WORK/frames" "$FPS" "$FROM" "$TO" &
 done
 wait
 
 echo "3/4 Making the soundtrack"
-python3 "$HERE/synth.py" "$WORK"
+python3 "$PROJ/synth.py" "$WORK"
 MIX="$WORK/mix.wav"
 if [ "${VO:-on}" != "off" ]; then
   if [ -z "${VO_FILE:-}" ] && [ ! -f "$WORK/tts/kokoro-v1.0.onnx" ]; then
@@ -59,7 +65,7 @@ MEASURED=$(ffmpeg -hide_banner -i "$MIX" -af "loudnorm=$LN:print_format=json" -f
 ffmpeg -v error -y -framerate "$FPS" -i "$WORK/frames/%05d.jpg" -i "$MIX" \
   -filter_complex "[0:v]format=yuv420p[v];[1:a]loudnorm=$LN:$MEASURED:linear=true,aresample=48000[a]" \
   -map "[v]" -map "[a]" -c:v libx264 -preset slow -crf 22 -maxrate 6M -bufsize 12M -profile:v high \
-  -c:a aac -b:a 192k -movflags +faststart -shortest "$ROOT/media/films/intro-reel.mp4"
-ffmpeg -v error -y -ss 7.82 -i "$ROOT/media/films/intro-reel.mp4" -frames:v 1 -vf scale=1280:-2 -q:v 4 \
-  "$ROOT/media/posters/intro-reel.jpg"
-echo "Done: media/films/intro-reel.mp4"
+  -c:a aac -b:a 192k -movflags +faststart -shortest "$ROOT/media/films/$NAME.mp4"
+ffmpeg -v error -y -ss "$POSTER_AT" -i "$ROOT/media/films/$NAME.mp4" -frames:v 1 -vf scale=1280:-2 -q:v 4 \
+  "$ROOT/media/posters/$NAME.jpg"
+echo "Done: media/films/$NAME.mp4"

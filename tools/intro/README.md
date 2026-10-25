@@ -2,7 +2,7 @@
 
 The source of `media/films/intro-reel.mp4`: a 46-second, 1080p60 motion-graphics intro built from the films in `media/films`. The hero's "Watch my intro" buttons play it, and it's the first card in "The good stuff".
 
-Everything is code, so any text, colour, timing or clip can be changed and the video rebuilt.
+Everything is code, so any text, colour, timing or clip can be changed and the video rebuilt. The SaaS intro in `tools/saas-intro` is built with the same tools.
 
 | File | What it is |
 | --- | --- |
@@ -10,8 +10,10 @@ Everything is code, so any text, colour, timing or clip can be changed and the v
 | `clips.txt` | Which part of which film each shot uses (`id  film  start  length  width`) |
 | `render.js` | Renders frames of `intro.html` with Playwright |
 | `synth.py` | The original 120 BPM music and every sound effect, timed to the cuts |
+| `sound.py` | The synthesised instruments and effects that both soundtracks use |
 | `vo.py` | The voiceover: the script and its cues, the AI voice, and the mix that dips the music under it |
-| `build.sh` | Runs all of it and writes the MP4 and its poster |
+| `project.conf` | Output name, length and poster frame |
+| `build.sh` | Runs all of it and writes the MP4 and its poster. Give it `tools/saas-intro` to build the SaaS intro |
 
 ## Rebuild
 

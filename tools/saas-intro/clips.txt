@@ -1,0 +1,19 @@
+# id  film  start  length  width   (SaaS films only)
+v_laptop vidai 7.5 2.0 1280
+v_prompt vidai 11.0 2.0 1280
+v_gen vidai 17.2 2.0 1280
+v_result vidai 22.0 2.0 1280
+v_live vidai 25.7 1.4 1280
+l_signups 1lookup 1.0 2.0 1280
+l_chaos 1lookup 4.0 2.0 1280
+l_magnify 1lookup 11.0 2.0 1280
+l_table 1lookup 19.0 2.0 1280
+l_cheer 1lookup 22.0 2.0 1280
+s_phone sasify 2.0 2.0 1280
+s_products sasify 15.0 2.0 1280
+s_checkout sasify 16.8 1.8 1280
+s_verified sasify 19.6 1.8 1280
+s_end sasify 28.0 2.0 1280
+k_vidai vidai 13.0 2.0 1920
+k_1lookup 1lookup 10.5 2.0 1920
+k_sasify sasify 19.6 1.8 1920

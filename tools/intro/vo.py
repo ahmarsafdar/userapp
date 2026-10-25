@@ -3,8 +3,10 @@
 python3 vo.py <work dir> [recorded.wav]
 
 Reads music.wav and sfx.wav from the work dir and writes vo.wav and mix_vo.wav there.
-Without a recording, the lines below are spoken by the Kokoro voice model, which must be in
-<work dir>/tts. A recording must be lined up with the video and start at 0:00."""
+Without a recording, the lines are spoken by the Kokoro voice model, which must be in
+<work dir>/tts. The lines are LINES below, or <work dir>/lines.txt when it exists
+("start | latest end | line" per row). A recording must be lined up with the video and
+start at 0:00."""
 import os
 import sys
 import numpy as np
@@ -16,6 +18,7 @@ WORK = sys.argv[1]
 RECORDING = sys.argv[2] if len(sys.argv) > 2 else None
 VOICE = 'am_michael'
 NAME = ('ˈɑːmɚ', 'ˈɑːmɑːɹ')  # say "Ahmar" as AH-mahr
+SAY = {'SaaS': 'sass'}  # spellings the voice model reads better
 
 # (start s, latest end s, line). Each line starts on its cue and is sped up if needed to end in time.
 LINES = [
@@ -35,6 +38,14 @@ LINES = [
     (40.1, 41.85, "Let's make yours next."),
     (42.4, 44.4, "I'm Ahmar, freelance video editor."),
 ]
+LINES_FILE = os.path.join(WORK, 'lines.txt')
+if os.path.exists(LINES_FILE):
+    LINES = []
+    for row in open(LINES_FILE, encoding='utf-8'):
+        row = row.strip()
+        if row and not row.startswith('#'):
+            start, end, text = (x.strip() for x in row.split('|', 2))
+            LINES.append((float(start), float(end), text))
 
 
 def load(name):
@@ -78,7 +89,10 @@ else:
     k = Kokoro(os.path.join(WORK, 'tts/kokoro-v1.0.onnx'), os.path.join(WORK, 'tts/voices-v1.0.bin'))
     vo = np.zeros(N, np.float32)
     for start, end, text in LINES:
-        ph = k.tokenizer.phonemize(text, 'en-us').replace(*NAME)
+        spoken = text
+        for word, say in SAY.items():
+            spoken = spoken.replace(word, say)
+        ph = k.tokenizer.phonemize(spoken, 'en-us').replace(*NAME)
         speed = 1.1
         while True:
             a, sr = k.create(ph, voice=VOICE, speed=speed, is_phonemes=True)

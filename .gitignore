@@ -1,1 +1,2 @@
-tools/intro/build/
+tools/*/build/
+__pycache__/

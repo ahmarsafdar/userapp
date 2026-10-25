@@ -1,0 +1,16 @@
+# start | latest end | line   (seconds; a line that's too long for its slot is sped up, to at most 1.25x)
+0.15 | 1.6 | Your product is brilliant.
+1.75 | 3.4 | Your demo? Not so much.
+4.15 | 5.4 | Hey, I'm Ahmar.
+5.45 | 7.95 | I make SaaS videos people actually watch.
+8.1 | 11.6 | Product demos that make your features click.
+12.1 | 15.6 | Explainers that make the problem obvious.
+16.1 | 19.6 | And motion explainers that make buying feel easy.
+20.1 | 23.9 | Launch videos, product demos, walkthroughs and explainers.
+24.15 | 27.8 | You send the product. I do the rest.
+28.0 | 29.45 | Show it.
+29.5 | 30.95 | Simplify it.
+31.0 | 31.95 | Sell it.
+32.15 | 35.0 | Launching something? Let's make the video that sells it.
+35.75 | 37.6 | Just send me your product.
+38.4 | 40.2 | I'm Ahmar, SaaS video editor.
