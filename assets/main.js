@@ -2,8 +2,12 @@
   'use strict';
 
   const CARD_COLORS = ['pink', 'blue', 'orange', 'green', 'white'];
-  const SAAS_COLORS = ['white', 'blue', 'green', 'pink'];
   const REEL_COLORS = ['white', 'yellow', 'pink', 'green'];
+  // Films whose "section" matches a key here go in that section; the rest are sorted by shape.
+  const THEMED = {
+    saas: { colors: ['white', 'blue', 'green', 'pink'] },
+    health: { colors: ['white', 'yellow', 'pink', 'blue'] }
+  };
   const TILTS = ['0deg', '1deg', '0deg', '-1deg'];
 
   function safePlay(video) {
@@ -100,11 +104,9 @@
     });
   }
 
-  // ----- Work, SaaS demos and reels, built from films.json -----
+  // ----- Work, themed sections and reels, built from films.json -----
   const workGrid = document.getElementById('work-grid');
   if (workGrid) {
-    const saasGrid = document.getElementById('saas-grid');
-    const saasSection = document.getElementById('saas');
     const reelGrid = document.getElementById('reel-grid');
     const reelsSection = document.getElementById('reels');
     const projectCount = document.getElementById('project-count');
@@ -133,17 +135,20 @@
     }
 
     function render() {
-      // Films marked "section": "saas" go in the SaaS section; the rest go by shape.
-      const saas = films.filter((f) => f.section === 'saas');
-      const rest = films.filter((f) => f.section !== 'saas');
+      const rest = films.filter((f) => !Object.prototype.hasOwnProperty.call(THEMED, f.section));
       const wide = rest.filter((f) => f.format !== 'vertical');
       const tall = rest.filter((f) => f.format === 'vertical');
       projectCount.textContent = films.length + (films.length === 1 ? ' project' : ' projects');
       workGrid.replaceChildren.apply(workGrid, wide.map((f, i) => card(f, i, CARD_COLORS)));
-      saasGrid.replaceChildren.apply(saasGrid, saas.map((f, i) => card(f, i, SAAS_COLORS)));
       reelGrid.replaceChildren.apply(reelGrid, tall.map((f, i) => card(f, i, REEL_COLORS)));
-      saasSection.hidden = saas.length === 0;
       reelsSection.hidden = tall.length === 0;
+      // Each themed section has a <section id="KEY"> holding a grid with id "KEY-grid".
+      Object.keys(THEMED).forEach((key) => {
+        const list = films.filter((f) => f.section === key);
+        const grid = document.getElementById(key + '-grid');
+        grid.replaceChildren.apply(grid, list.map((f, i) => card(f, i, THEMED[key].colors)));
+        document.getElementById(key).hidden = list.length === 0;
+      });
       document.dispatchEvent(new CustomEvent('portfolio:render'));
     }
 

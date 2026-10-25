@@ -437,3 +437,9 @@ h1, h2, h3, p, figure { margin: 0; }
 }
 @media (max-width: 600px) { .ident-sticker { font-size: 12px; padding: 4px 10px; right: -4px; } }
 @media (prefers-reduced-motion: reduce) { .ident-card { transition: none; } }
+
+/* Health & wellness reels */
+.health { background: var(--green); border-bottom: var(--line); padding: var(--section) 0; }
+.health .section-head { margin-bottom: 16px; }
+.health .tag-sticker { background: var(--white); transform: rotate(3deg); }
+.section-lead { max-width: 620px; margin-bottom: 40px; }

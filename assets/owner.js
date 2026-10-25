@@ -10,7 +10,7 @@
   const TOKEN_URL = 'https://github.com/settings/personal-access-tokens/new';
   const MAX_MB = 50;
   const TYPES = ['Commercial', 'Product ad', 'Concept film', 'Brand film', 'CEO reel', 'Real-estate film',
-    'Skincare ad', 'Fragrance commercial', 'Tech commercial', 'SaaS product demo', 'Motion graphics explainer',
+    'Skincare ad', 'Fragrance commercial', 'Tech commercial', 'SaaS product demo', 'Health reel', 'Motion graphics explainer',
     '2D animated explainer', 'Music video', 'Event highlights'];
 
   const portfolio = window.portfolio;
@@ -211,7 +211,7 @@
     '    <div class="field">',
     '      <label for="add-file">Video file (MP4)</label>',
     '      <input id="add-file" type="file" accept="video/mp4,.mp4" required>',
-    '      <p class="owner-hint">Export as MP4 (H.264), 1080p or 720p, under ' + MAX_MB + ' MB. Wide videos go in “The good stuff”, vertical ones in “Made for the scroll” — or pick “SaaS &amp; product demos” below.</p>',
+    '      <p class="owner-hint">Export as MP4 (H.264), 1080p or 720p, under ' + MAX_MB + ' MB. Wide videos go in “The good stuff”, vertical ones in “Made for the scroll” — or pick “SaaS &amp; product demos” or “Health &amp; wellness” below.</p>',
     '    </div>',
     '    <div class="owner-preview" hidden>',
     '      <video muted playsinline preload="auto"></video>',
@@ -239,6 +239,7 @@
     '      <select id="add-section">',
     '        <option value="">By shape — “The good stuff” or “Made for the scroll”</option>',
     '        <option value="saas">SaaS &amp; product demos</option>',
+    '        <option value="health">Health &amp; wellness</option>',
     '      </select>',
     '    </div>',
     '    <fieldset class="owner-choice">',
