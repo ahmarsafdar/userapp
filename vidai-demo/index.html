@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vid.AI product film</title>
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="frame">
+  <canvas id="bg" width="1920" height="1080"></canvas>
+  <canvas id="gl" width="1920" height="1080"></canvas>
+
+  <div id="stageWrap"><div id="stage"><div id="slab">
+    <div class="plate p3"></div>
+    <div class="plate p2"></div>
+    <div class="glass">
+      <div class="steps">
+        <span class="step" id="st1"><i>1</i>Describe it</span><b>›</b>
+        <span class="step" id="st2"><i>2</i>Voice &amp; style</span><b>›</b>
+        <span class="step" id="st3"><i>3</i>Generate &amp; post</span>
+      </div>
+      <div class="tabs">
+        <span class="tab-ind" id="tabInd"></span>
+        <span class="tab" id="tabFaceless">Faceless video</span>
+        <span class="tab" id="tabShort">Short</span>
+        <span class="tab" id="tabAvatar">With an avatar</span>
+      </div>
+      <div class="card">
+
+        <!-- S1: describe + options -->
+        <div class="state" id="s1">
+          <div class="lbl">Your idea</div>
+          <div class="prompt" id="prompt"><span id="typed"></span><span class="caret" id="caret"></span><span class="ph" id="ph">Describe the video you want to make</span></div>
+          <div class="meta"><span>Add visual direction (optional)</span><span id="count">0 / 2,000</span></div>
+          <div class="row"><span class="row-l">Narrator</span>
+            <div class="voice" id="voice"><div class="avatar">M</div><div><b>Marcus</b><small>Deep · Documentary</small></div><div class="wave" id="wave"></div></div>
+          </div>
+          <div class="row"><span class="row-l">Length</span>
+            <div class="seg" id="len"><span id="len30">30s</span><span id="len60">60s</span><span id="len3">3 min</span><span id="len10">10 min</span></div>
+          </div>
+          <div class="lbl">Image style</div>
+          <div class="styles">
+            <div class="sty" id="styCine"><img src="assets/style-cinematic.jpg" alt=""><span>Cinematic</span><div class="chk"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            <div class="sty" id="styAnime"><img src="assets/style-anime.jpg" alt=""><span>Anime</span></div>
+            <div class="sty" id="styComic"><img src="assets/style-comic-art.jpg" alt=""><span>Comic Art</span></div>
+            <div class="sty" id="styNeon"><img src="assets/style-neon-art.jpg" alt=""><span>Neon Art</span></div>
+          </div>
+          <div class="cta" id="gen"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L20.5 10l-6.3 2.2L12 18.5l-2.2-6.3L3.5 10l6.3-1.7z" fill="currentColor"/><path d="M19 15l.9 2.3 2.3.9-2.3.9L19 21.4l-.9-2.3-2.3-.9 2.3-.9z" fill="currentColor"/></svg><span>Generate</span><i class="sheen" id="genSheen"></i></div>
+        </div>
+
+        <!-- S2: generating -->
+        <div class="state" id="s2">
+          <div class="gen-head">
+            <div class="spin"><svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="40" fill="none" stroke="#E6EAF2" stroke-width="8"/><circle id="spinArc" cx="48" cy="48" r="40" fill="none" stroke="#3B82F6" stroke-width="8" stroke-linecap="round" stroke-dasharray="70 182" transform="rotate(-90 48 48)"/></svg></div>
+            <h3>Generating your Short</h3>
+            <p>Cinematic · Marcus · 60 seconds</p>
+          </div>
+          <ul class="checks" id="checks">
+            <li><span class="dot"></span>Writing the script<span class="st"></span></li>
+            <li><span class="dot"></span>Recording the voiceover<span class="st"></span></li>
+            <li><span class="dot"></span>Creating the visuals<span class="st"></span></li>
+            <li><span class="dot"></span>Adding captions<span class="st"></span></li>
+            <li><span class="dot"></span>Mixing the music<span class="st"></span></li>
+          </ul>
+          <div class="prog"><i id="progBar"></i></div>
+          <div class="pct"><span>1080 × 1920</span><span id="pct">0%</span></div>
+        </div>
+
+        <!-- S3: ready -->
+        <div class="state" id="s3">
+          <div class="ready">
+            <div class="pv"><canvas id="pvCanvas" width="300" height="533"></canvas><span class="dur">0:58</span></div>
+            <div class="rc">
+              <span class="badge"><svg width="18" height="18" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Video ready</span>
+              <h3>Forty Days to the Summit</h3>
+              <p>12 scenes · voiceover · captions · music</p>
+              <div class="lbl">Scenes</div>
+              <div class="scenes">
+                <div style="background-image:url(assets/style-cinematic.jpg)"></div>
+                <div style="background-image:url(assets/style-natural.jpg)"></div>
+                <div style="background-image:url(assets/style-neon-art.jpg)"></div>
+                <div style="background-image:url(assets/style-isometric.jpg)"></div>
+                <div style="background-image:url(assets/style-cinematic.jpg);background-position:20% 50%"></div>
+                <div style="background-image:url(assets/style-natural.jpg);background-position:80% 50%"></div>
+              </div>
+              <div class="tl"><i id="tlFill"></i></div>
+              <div class="chips"><span>Marcus</span><span>Cinematic</span><span>Captions on</span><span>Ambient score</span></div>
+              <div class="btns">
+                <div class="btn2" id="exportBtn"><i class="fill" id="exportFill"></i><span id="exportLbl">Export 1080p</span></div>
+                <div class="btn2 pri" id="postBtn"><span>Post it</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- S4: publish -->
+        <div class="state" id="s4">
+          <div class="pub-h"><h3>Post your Short</h3><p>1 video · 58 seconds · 1080 × 1920</p></div>
+          <div class="plat"><div class="pi"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#3F4659"/></svg></div><div><b>YouTube Shorts</b><small>Summit Stories</small></div><div class="tg" id="tg1"><i></i></div></div>
+          <div class="plat"><div class="pi"><svg viewBox="0 0 24 24"><path d="M15 4v9.5a3.5 3.5 0 1 1-3-3.46V4h3zM15 4c.5 2.2 2 3.6 4 3.9" fill="none" stroke="#3F4659" stroke-width="2.2" stroke-linecap="round"/></svg></div><div><b>TikTok</b><small>@summitstories</small></div><div class="tg" id="tg2"><i></i></div></div>
+          <div class="plat"><div class="pi"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5" fill="none" stroke="#3F4659" stroke-width="2.2"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="#3F4659" stroke-width="2.2"/></svg></div><div><b>Instagram Reels</b><small>summit.stories</small></div><div class="tg" id="tg3"><i></i></div></div>
+          <div class="capbox"><span class="lbl">Caption</span>He walked forty days to see this. Full story on the channel. #hiking #mountains #story</div>
+          <div class="cta on" id="pubBtn"><span>Post to 3 platforms</span><i class="sheen" id="pubSheen"></i></div>
+        </div>
+
+        <!-- S5: live -->
+        <div class="state" id="s5">
+          <div class="live">
+            <div class="bigchk"><svg width="64" height="64" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Your Short is live</h3>
+            <p>Posted to YouTube Shorts, TikTok and Instagram Reels</p>
+            <div class="stats">
+              <div class="stat"><b id="views">0</b><small>views in the first hour</small></div>
+              <div class="stat"><b id="likes">0</b><small>likes</small></div>
+            </div>
+            <div class="bars" id="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="again">Make another video</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div></div></div>
+
+  <div id="type"></div>
+  <div id="vignette"></div>
+  <canvas id="grain" width="960" height="540"></canvas>
+  <div id="fade"></div>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <filter id="wave" x="-20%" y="-200%" width="140%" height="500%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="1" seed="4"/>
+    <feDisplacementMap id="waveDisp" in="SourceGraphic" scale="0" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<script type="module" src="scene.js"></script>
+</body>
+</html>
