@@ -174,8 +174,8 @@
   const ui = document.createElement('div');
   ui.innerHTML = [
     '<div class="owner-bar" hidden>',
-    '  <button type="button" class="btn btn-gold" data-owner="add">+ Add film</button>',
-    '  <button type="button" class="btn btn-ghost" data-owner="signout">Sign out</button>',
+    '  <button type="button" class="btn btn-ink" data-owner="add">+ Add film</button>',
+    '  <button type="button" class="btn btn-white" data-owner="signout">Sign out</button>',
     '</div>',
     '<p class="owner-toast" role="status" aria-live="polite"></p>',
 
@@ -199,8 +199,8 @@
     '    </div>',
     '    <p class="form-status" role="status"></p>',
     '    <div class="owner-actions">',
-    '      <button type="submit" class="btn btn-light">Sign in</button>',
-    '      <button type="button" class="btn btn-ghost" data-close>Cancel</button>',
+    '      <button type="submit" class="btn btn-ink">Sign in</button>',
+    '      <button type="button" class="btn btn-white" data-close>Cancel</button>',
     '    </div>',
     '  </form>',
     '</dialog>',
@@ -211,7 +211,7 @@
     '    <div class="field">',
     '      <label for="add-file">Video file (MP4)</label>',
     '      <input id="add-file" type="file" accept="video/mp4,.mp4" required>',
-    '      <p class="owner-hint">Export as MP4 (H.264), 1080p or 720p, under ' + MAX_MB + ' MB. Wide videos go in the film strip; vertical ones go in “Made for the scroll”.</p>',
+    '      <p class="owner-hint">Export as MP4 (H.264), 1080p or 720p, under ' + MAX_MB + ' MB. Wide videos go in “The good stuff”; vertical ones go in “Made for the scroll”.</p>',
     '    </div>',
     '    <div class="owner-preview" hidden>',
     '      <video muted playsinline preload="auto"></video>',
@@ -226,7 +226,7 @@
     '      <input id="add-title" required maxlength="80" placeholder="e.g. Nova Watch — Launch Film">',
     '    </div>',
     '    <div class="field">',
-    '      <label for="add-short">Short name for the strip (optional)</label>',
+    '      <label for="add-short">Short name for the card (optional)</label>',
     '      <input id="add-short" maxlength="28" placeholder="e.g. Nova Watch">',
     '    </div>',
     '    <div class="field">',
@@ -239,11 +239,10 @@
     '      <label><input type="radio" name="position" value="first" checked> First (newest work)</label>',
     '      <label><input type="radio" name="position" value="last"> Last</label>',
     '    </fieldset>',
-    '    <label class="owner-check" data-start-row hidden><input type="checkbox" id="add-start"> Play this film first when people open the site</label>',
     '    <p class="form-status" role="status" aria-live="polite"></p>',
     '    <div class="owner-actions">',
-    '      <button type="submit" class="btn btn-light">Add to portfolio</button>',
-    '      <button type="button" class="btn btn-ghost" data-close>Cancel</button>',
+    '      <button type="submit" class="btn btn-ink">Add to portfolio</button>',
+    '      <button type="button" class="btn btn-white" data-close>Cancel</button>',
     '    </div>',
     '  </form>',
     '</dialog>'
@@ -263,7 +262,6 @@
   const preview = previewBox.querySelector('video');
   const frameInput = addForm.querySelector('#add-frame');
   const info = addForm.querySelector('[data-info]');
-  const startRow = addForm.querySelector('[data-start-row]');
 
   let busy = false;
   let previewUrl = null;
@@ -293,7 +291,7 @@
     document.querySelectorAll('.owner-remove').forEach((btn) => btn.remove());
     if (!signedIn()) return;
     const films = portfolio.films();
-    document.querySelectorAll('.film-item, .reel').forEach((item) => {
+    document.querySelectorAll('.work-card').forEach((item) => {
       const film = films.find((f) => f.id === item.dataset.id);
       if (!film) return;
       const btn = document.createElement('button');
@@ -305,7 +303,7 @@
         e.stopPropagation();
         removeFilm(film.id);
       });
-      (item.querySelector('.reel-frame') || item).appendChild(btn);
+      item.appendChild(btn);
     });
   }
   document.addEventListener('portfolio:render', refreshOwnerUi);
@@ -363,7 +361,6 @@
     addForm.reset();
     addStatus.textContent = '';
     previewBox.hidden = true;
-    startRow.hidden = true;
     picked = null;
     preview.removeAttribute('src');
     preview.load();
@@ -380,7 +377,6 @@
     const file = fileInput.files[0];
     picked = null;
     previewBox.hidden = true;
-    startRow.hidden = true;
     addStatus.textContent = '';
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     previewUrl = null;
@@ -402,10 +398,9 @@
       frameInput.max = String(Math.max(0.1, preview.duration - 0.1));
       frameInput.value = String(Math.min(preview.duration * 0.3, preview.duration - 0.1));
       preview.currentTime = Number(frameInput.value);
-      info.textContent = (format === 'vertical' ? 'Vertical (9:16) — goes in “Made for the scroll”' : 'Wide (16:9) — goes in the film strip') +
+      info.textContent = (format === 'vertical' ? 'Vertical (9:16) — goes in “Made for the scroll”' : 'Wide (16:9) — goes in “The good stuff”') +
         ' · ' + picked.length + ' · ' + mb.toFixed(1) + ' MB';
       previewBox.hidden = false;
-      startRow.hidden = format === 'vertical';
     };
     preview.onerror = () => {
       addStatus.textContent = 'This browser can’t play that file, so visitors couldn’t either. Export it as MP4 (H.264) and try again.';
@@ -432,7 +427,6 @@
     const short = addForm.querySelector('#add-short').value.trim() || title;
     const type = addForm.querySelector('#add-type').value.trim();
     const first = addForm.querySelector('input[name="position"]:checked').value === 'first';
-    const makeStart = picked.format === 'wide' && addForm.querySelector('#add-start').checked;
 
     setBusy(addForm, true);
     try {
@@ -448,7 +442,6 @@
         id: id, title: title, short: short, type: type, length: picked.length, format: picked.format,
         src: 'media/films/' + id + '.mp4', poster: 'media/posters/' + id + '.jpg'
       };
-      if (makeStart) film.start = true;
 
       const uploads = [
         { path: film.src, label: 'the video (' + (picked.file.size / 1048576).toFixed(1) + ' MB) — this can take a minute', base64: await toBase64(picked.file) },
@@ -456,8 +449,7 @@
       ];
       const next = await commit('Add film: ' + title, uploads, (list) => {
         if (list.some((f) => f.id === id)) throw new Error('A film with this name was just added. Please try again.');
-        const rest = makeStart ? list.map((f) => { const copy = Object.assign({}, f); delete copy.start; return copy; }) : list;
-        return { films: first ? [film].concat(rest) : rest.concat([film]) };
+        return { films: first ? [film].concat(list) : list.concat([film]) };
       }, (message) => { addStatus.textContent = message; });
 
       localMedia[id] = { src: previewUrl, poster: URL.createObjectURL(posterBlob) };

@@ -6,7 +6,7 @@ It is a static site: plain HTML, CSS and JavaScript with no build step.
 
 | File | What it is |
 | --- | --- |
-| `index.html` | Home page: full-screen film player, film strip, featured films, vertical reels, about, services and contact |
+| `index.html` | Home page: hero, scrolling services band, “The good stuff” film cards, “Made for the scroll” reels, about, services and contact. Films play in a pop-up player |
 | `vanta.html` | VANTA case study |
 | `films.json` | The list of films shown on the home page, in display order |
 | `assets/owner.js` | Owner mode for adding and removing films from the live site |
@@ -19,7 +19,7 @@ It is a static site: plain HTML, CSS and JavaScript with no build step.
    - Under **Permissions**, give **Contents** "Read and write" access.
 
    The key stays in that browser only, so do this once on each device you use.
-3. Click **+ Add film** and choose an MP4. Wide videos go in the film strip and vertical ones go in "Made for the scroll".
+3. Click **+ Add film** and choose an MP4. Wide videos go in "The good stuff" and vertical ones go in "Made for the scroll".
 4. Slide to pick the cover frame, then add a title and type.
 5. To take a film down, click the **×** on it.
 
@@ -51,10 +51,9 @@ Owner mode saves to the default branch, so Pages must publish from that branch f
 
 ## Editing by hand
 
-- **Films:** edit `films.json`. Each film has an `id`, `title`, `short` (strip label), `type`, `length`, `format` (`wide` or `vertical`), `src` and `poster`.
-  - `"start": true` picks the film that plays first.
-  - `"link"` adds a "View case study" link.
-- **Featured panels:** the four large panels in `index.html` point at films by `id` through `data-play` and `data-num-for`.
+- **Films:** edit `films.json`. Each film has an `id`, `title`, `short` (card label), `type`, `length`, `format` (`wide` or `vertical`), `src` and `poster`.
+  - Cards appear in list order and cycle through pink, blue, orange, green and white.
+  - `"link"` adds a "Case study" link to that card.
 - **Instagram / YouTube buttons:** uncomment them in the contact section of `index.html` and paste in your links.
 - **Contact form:** opens the visitor's email app with the enquiry addressed to the email in the form's `action`.
 - **Colours and fonts:** the variables at the top of `assets/style.css`.

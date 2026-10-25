@@ -1,15 +1,15 @@
 (function () {
   'use strict';
 
-  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const smooth = reduceMotion ? 'auto' : 'smooth';
+  const CARD_COLORS = ['pink', 'blue', 'orange', 'green', 'white'];
+  const REEL_COLORS = ['white', 'yellow', 'pink', 'green'];
+  const TILTS = ['0deg', '1deg', '0deg', '-1deg'];
 
   function safePlay(video) {
     const p = video.play();
     if (p && p.catch) p.catch(() => {});
   }
 
-  const pad = (n) => (n < 10 ? '0' : '') + n;
   const metaOf = (film) => film.type + ' · ' + film.length;
 
   // Small DOM builder; text always goes in as textContent.
@@ -23,137 +23,102 @@
     return node;
   }
 
+  function playIcon() {
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('width', '20');
+    svg.setAttribute('height', '20');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', 'M8 5v14l11-7z');
+    path.setAttribute('fill', 'currentColor');
+    svg.appendChild(path);
+    return svg;
+  }
+
   document.querySelectorAll('[data-year]').forEach((node) => {
     node.textContent = new Date().getFullYear();
   });
 
-  const hero = document.getElementById('hero-video');
-  let setSound = () => {};
-
-  // ----- Only one video with sound at a time (capture, so it covers videos rendered later) -----
+  // ----- Only one video plays at a time (capture, so it covers videos rendered later) -----
   document.addEventListener('play', (e) => {
     const video = e.target;
-    if (!(video instanceof HTMLVideoElement) || video === hero) return;
+    if (!(video instanceof HTMLVideoElement)) return;
     document.querySelectorAll('video').forEach((other) => {
-      if (other !== video && other !== hero) other.pause();
+      if (other !== video) other.pause();
     });
-    if (hero && !hero.muted) setSound(false);
   }, true);
 
-  // ----- Home page: hero player, film strip and reels, all driven by films.json -----
-  if (hero) {
-    const strip = document.getElementById('strip');
+  // ----- Pop-up player -----
+  const player = document.getElementById('player');
+  const playerVideo = document.getElementById('player-video');
+
+  function openPlayer(film) {
+    document.getElementById('player-title').textContent = film.title;
+    document.getElementById('player-meta').textContent = metaOf(film);
+    player.classList.toggle('is-vertical', film.format === 'vertical');
+    playerVideo.poster = film.poster || '';
+    playerVideo.src = film.src;
+    playerVideo.setAttribute('aria-label', film.title);
+    player.showModal();
+    safePlay(playerVideo);
+  }
+
+  if (player) {
+    player.querySelector('[data-close-player]').addEventListener('click', () => player.close());
+    player.addEventListener('click', (e) => { if (e.target === player) player.close(); });
+    player.addEventListener('close', () => {
+      playerVideo.pause();
+      playerVideo.removeAttribute('src');
+      playerVideo.load();
+    });
+
+    const intro = document.getElementById('intro-video');
+    document.querySelectorAll('[data-intro]').forEach((btn) => {
+      btn.addEventListener('click', () => openPlayer({
+        title: 'Meet Ahmar', type: 'A quick hello', length: '1:12', format: 'wide',
+        src: intro.getAttribute('src'), poster: intro.getAttribute('poster')
+      }));
+    });
+  }
+
+  // ----- Work and reels, built from films.json -----
+  const workGrid = document.getElementById('work-grid');
+  if (workGrid) {
     const reelGrid = document.getElementById('reel-grid');
-    const filmCount = document.getElementById('film-count');
-    const soundBtn = document.getElementById('sound-toggle');
-    const playBtn = document.getElementById('play-toggle');
-    const nowNum = document.getElementById('now-num');
-    const nowTitle = document.getElementById('now-title');
-    const nowMeta = document.getElementById('now-meta');
-
+    const reelsSection = document.getElementById('reels');
+    const projectCount = document.getElementById('project-count');
     let films = [];
-    let numbers = {};
-    let currentId = null;
-    let soundOn = false;
-    let userPaused = reduceMotion;
-    let autoPaused = false;
 
-    const PAUSE_ICON = '<path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/>';
-    const PLAY_ICON = '<path d="M8 5v14l11-7z" fill="currentColor"/>';
-
-    hero.muted = true;
-    hero.defaultMuted = true;
-    if (reduceMotion) hero.removeAttribute('autoplay');
-
-    const findFilm = (id) => films.find((f) => f.id === id);
-
-    setSound = (on) => {
-      soundOn = on;
-      hero.muted = !on;
-      soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      soundBtn.querySelector('span').textContent = on ? 'Sound off' : 'Sound on';
-      if (on) {
-        document.querySelectorAll('video').forEach((v) => { if (v !== hero) v.pause(); });
-        userPaused = false;
-        safePlay(hero);
-      }
-    };
-
-    const updatePlayBtn = () => {
-      const paused = hero.paused;
-      playBtn.querySelector('svg').innerHTML = paused ? PLAY_ICON : PAUSE_ICON;
-      playBtn.querySelector('span').textContent = paused ? 'Play' : 'Pause';
-      playBtn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
-    };
-    hero.addEventListener('play', updatePlayBtn);
-    hero.addEventListener('pause', updatePlayBtn);
-
-    function showFilm(id, opts) {
-      const film = findFilm(id);
-      if (!film) return;
-      const picked = opts && opts.picked;
-      currentId = id;
-      strip.querySelectorAll('.film-item').forEach((item) => {
-        item.querySelector('.film-card').setAttribute('aria-pressed', item.dataset.id === id ? 'true' : 'false');
-      });
-      if (hero.getAttribute('src') !== film.src) hero.src = film.src;
-      hero.poster = film.poster;
-      hero.setAttribute('aria-label', film.title + ', ' + metaOf(film));
-      nowNum.textContent = numbers[id];
-      nowTitle.textContent = film.title;
-      nowMeta.textContent = metaOf(film);
-      hero.muted = !soundOn;
-      if (picked) userPaused = false;
-      if (!userPaused) safePlay(hero);
-      const item = strip.querySelector('.film-item[data-id="' + CSS.escape(id) + '"]');
-      if (item) {
-        strip.scrollTo({
-          left: item.offsetLeft - (strip.clientWidth - item.offsetWidth) / 2,
-          behavior: picked ? smooth : 'auto'
-        });
-      }
+    function card(film, i, vertical) {
+      const colors = vertical ? REEL_COLORS : CARD_COLORS;
+      const media = el('button', { type: 'button', class: 'card-media', 'aria-label': 'Play ' + film.title }, [
+        el('img', { src: film.poster, alt: '', loading: 'lazy' }),
+        el('span', { class: 'card-play', 'aria-hidden': 'true' }, [playIcon()])
+      ]);
+      media.addEventListener('click', () => openPlayer(film));
+      const parts = [
+        media,
+        el('div', { class: 'card-info' }, [
+          el('h3', { text: film.short || film.title }),
+          el('span', { class: 'chip', text: metaOf(film) })
+        ])
+      ];
+      if (film.link) parts.push(el('a', { class: 'card-link', href: film.link, text: 'Case study →' }));
+      return el('article', {
+        class: 'work-card c-' + colors[i % colors.length] + (vertical ? ' is-vertical' : ''),
+        style: '--tilt: ' + TILTS[i % TILTS.length],
+        'data-id': film.id
+      }, parts);
     }
 
     function render() {
       const wide = films.filter((f) => f.format !== 'vertical');
       const tall = films.filter((f) => f.format === 'vertical');
-      numbers = {};
-      wide.concat(tall).forEach((f, i) => { numbers[f.id] = pad(i + 1); });
-
-      filmCount.textContent = 'Choose a film · ' + wide.length + (wide.length === 1 ? ' film' : ' films');
-      strip.replaceChildren.apply(strip, wide.map((f) => el('div', { class: 'film-item', 'data-id': f.id }, [
-        el('button', { type: 'button', class: 'film-card', 'aria-pressed': 'false' }, [
-          el('img', { src: f.poster, alt: '', loading: 'lazy' }),
-          el('span', { text: numbers[f.id] + ' · ' + (f.short || f.title) })
-        ])
-      ])));
-
-      reelGrid.replaceChildren.apply(reelGrid, tall.map((f) => {
-        const video = el('video', {
-          src: f.src, poster: f.poster, controls: '', preload: 'none', playsinline: '',
-          'aria-label': f.title + ', ' + f.type
-        });
-        const parts = [
-          el('div', { class: 'reel-frame' }, [video]),
-          el('p', { class: 'eyebrow', text: numbers[f.id] + ' · ' + metaOf(f) }),
-          el('h3', { text: f.title })
-        ];
-        if (f.link) parts.push(el('a', { class: 'text-link', href: f.link, text: 'View case study →' }));
-        return el('article', { class: 'reel', 'data-id': f.id }, parts);
-      }));
-      document.getElementById('scroll').hidden = tall.length === 0;
-
-      // Featured panels follow the strip's numbering and hide if their film is removed.
-      document.querySelectorAll('[data-num-for]').forEach((num) => {
-        const id = num.dataset.numFor;
-        if (numbers[id]) num.textContent = numbers[id];
-        num.closest('.panel').hidden = !findFilm(id);
-      });
-
-      const current = currentId && findFilm(currentId);
-      const start = current && current.format !== 'vertical' ? current : (wide.find((f) => f.start) || wide[0]);
-      if (start) showFilm(start.id);
-
+      projectCount.textContent = films.length + (films.length === 1 ? ' project' : ' projects');
+      workGrid.replaceChildren.apply(workGrid, wide.map((f, i) => card(f, i, false)));
+      reelGrid.replaceChildren.apply(reelGrid, tall.map((f, i) => card(f, i, true)));
+      reelsSection.hidden = tall.length === 0;
       document.dispatchEvent(new CustomEvent('portfolio:render'));
     }
 
@@ -163,53 +128,6 @@
       setFilms: (list) => { films = list; render(); }
     };
 
-    strip.addEventListener('click', (e) => {
-      const card = e.target.closest('.film-card');
-      if (card) showFilm(card.closest('.film-item').dataset.id, { picked: true });
-    });
-
-    document.querySelectorAll('[data-play]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        showFilm(btn.dataset.play, { picked: true });
-        setSound(true);
-        window.scrollTo({ top: 0, behavior: smooth });
-      });
-    });
-
-    soundBtn.addEventListener('click', () => setSound(!soundOn));
-
-    playBtn.addEventListener('click', () => {
-      if (hero.paused) {
-        userPaused = false;
-        safePlay(hero);
-      } else {
-        userPaused = true;
-        hero.pause();
-      }
-    });
-
-    document.querySelectorAll('[data-strip]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        strip.scrollBy({ left: Number(btn.dataset.strip) * strip.clientWidth * 0.8, behavior: smooth });
-      });
-    });
-
-    // Save battery: pause the muted hero while it is off screen, resume when it returns.
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver((entries) => {
-        const visible = entries[0].isIntersecting;
-        if (!visible && !hero.paused && !soundOn) {
-          autoPaused = true;
-          hero.pause();
-        } else if (visible && autoPaused && !userPaused) {
-          autoPaused = false;
-          safePlay(hero);
-        }
-      }, { threshold: 0.15 }).observe(hero);
-    }
-
-    updatePlayBtn();
-
     fetch('films.json', { cache: 'no-cache' })
       .then((res) => {
         if (!res.ok) throw new Error('films.json ' + res.status);
@@ -217,7 +135,7 @@
       })
       .then((data) => window.portfolio.setFilms(data.films || []))
       .catch(() => {
-        filmCount.textContent = 'The film list didn’t load — please refresh the page.';
+        projectCount.textContent = 'Didn’t load — please refresh';
       });
   }
 

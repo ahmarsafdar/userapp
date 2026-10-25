@@ -8,23 +8,28 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="VANTA — Case study · Ahmar Safdar">
 <meta property="og:description" content="A 27-second vertical sneaker ad, cut so the product stays the hero of every shot.">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#FFE74C">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></symbol>
+</svg>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header site-header--solid">
+<header class="site-header">
   <div class="wrap">
-    <a class="logo" href="index.html">AHMAR SAFDAR</a>
-    <div class="header-right">
-      <a class="nav-link" href="index.html#films">← All films</a>
-      <a class="header-cta" href="index.html#contact">Book a call</a>
-    </div>
+    <a class="logo" href="index.html" aria-label="Ahmar Safdar, home">AHMAR<svg class="spark" aria-hidden="true"><use href="#spark"/></svg></a>
+    <nav class="nav" aria-label="Primary">
+      <a class="pill" href="index.html#work">← All work</a>
+      <a class="pill" href="index.html#about">About</a>
+      <a class="pill" href="index.html#contact">Contact</a>
+    </nav>
+    <a class="btn btn-ink btn-sm btn-hire" href="index.html#contact">Hire me!</a>
   </div>
 </header>
 
@@ -33,15 +38,19 @@
 <section class="cs-hero">
   <div class="wrap">
     <div class="cs-intro">
-      <p class="eyebrow">Case study</p>
+      <span class="tag-sticker">Case study</span>
       <h1>VANTA</h1>
-      <p class="cs-meta">Product ad · Vertical 9:16 · 0:27</p>
+      <div class="cs-chips">
+        <span class="chip">Product ad</span>
+        <span class="chip">Vertical 9:16</span>
+        <span class="chip">0:27</span>
+      </div>
       <p class="lead">A 27-second sneaker ad set on a rain-soaked, neon-lit street — slow-motion splashes, a floating shoe and a run past the VANTA sign, cut so the product stays the hero of every shot.</p>
-      <dl class="facts-list">
-        <div><dt>My role</dt><dd>Concept to final cut — made to sell</dd></div>
-        <div><dt>Deliverable</dt><dd>27s vertical ad</dd></div>
-        <div><dt>Format</dt><dd>Vertical 9:16</dd></div>
-        <div><dt>Made for</dt><dd>Reels · TikTok · Shorts</dd></div>
+      <dl class="facts-grid">
+        <div class="fact c-pink"><dt>My role</dt><dd>Concept to final cut — made to sell</dd></div>
+        <div class="fact c-green"><dt>Deliverable</dt><dd>27s vertical ad</dd></div>
+        <div class="fact c-white"><dt>Format</dt><dd>Vertical 9:16</dd></div>
+        <div class="fact c-orange"><dt>Made for</dt><dd>Reels · TikTok · Shorts</dd></div>
       </dl>
     </div>
     <div class="cs-video">
@@ -53,8 +62,8 @@
 <section class="frames" aria-labelledby="frames-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="frames-title" class="display">Frames</h2>
-      <p class="eyebrow">Six moments from the cut</p>
+      <h2 id="frames-title" class="h2">Frames</h2>
+      <span class="tag-sticker">Six moments from the cut</span>
     </div>
     <div class="frame-grid">
       <img src="media/stills/vanta-1.jpg" alt="A single drop rippling a puddle on a wet night street" loading="lazy">
@@ -67,41 +76,51 @@
   </div>
 </section>
 
-<section class="story" aria-label="How the cut works">
+<section class="story" aria-labelledby="story-title">
   <div class="wrap">
-    <div class="story-row">
-      <h2>The hook</h2>
-      <p>It opens on a single drop hitting a puddle — a quiet beat — and then the sneaker lands in a splash. The product is on screen within the first seconds, before anyone thinks about scrolling.</p>
+    <div class="section-head">
+      <h2 id="story-title" class="h2">How it's cut</h2>
     </div>
-    <div class="story-row">
-      <h2>The build</h2>
-      <p>Slow-motion splashes and a shoe floating in the rain show off the sole and the materials, then the pace picks up with a run into a neon-lit tunnel.</p>
-    </div>
-    <div class="story-row">
-      <h2>The payoff</h2>
-      <p>A foot steps down in front of the red VANTA sign and the shoe comes to rest on wet, glittering asphalt — brand and product together in the final frame, so the viewer knows exactly what to buy.</p>
+    <div class="story-grid">
+      <article class="story-card c-pink">
+        <span class="chip">01</span>
+        <h3>The hook</h3>
+        <p>It opens on a single drop hitting a puddle — a quiet beat — and then the sneaker lands in a splash. The product is on screen within the first seconds, before anyone thinks about scrolling.</p>
+      </article>
+      <article class="story-card c-green">
+        <span class="chip">02</span>
+        <h3>The build</h3>
+        <p>Slow-motion splashes and a shoe floating in the rain show off the sole and the materials, then the pace picks up with a run into a neon-lit tunnel.</p>
+      </article>
+      <article class="story-card c-orange">
+        <span class="chip">03</span>
+        <h3>The payoff</h3>
+        <p>A foot steps down in front of the red VANTA sign and the shoe comes to rest on wet, glittering asphalt — brand and product together in the final frame, so the viewer knows exactly what to buy.</p>
+      </article>
     </div>
   </div>
 </section>
 
 <section class="next" aria-label="Next film">
-  <a href="index.html#scroll">
-    <span class="next-text">
-      <span class="eyebrow">Next film</span>
-      <span class="next-title">Kahwa &amp; Co. →</span>
-      <span class="next-meta">Product ad · Vertical 9:16 · 0:30</span>
-    </span>
-    <img src="media/posters/kahwa.jpg" alt="Kahwa and Co. cold brew bottle in warm morning light" loading="lazy">
-  </a>
+  <div class="wrap">
+    <a href="index.html#reels">
+      <span class="next-text">
+        <span class="next-label">Next up</span>
+        <span class="next-title">Kahwa &amp; Co. →</span>
+        <span>Product ad · Vertical 9:16 · 0:30</span>
+      </span>
+      <img src="media/posters/kahwa.jpg" alt="Kahwa and Co. cold brew bottle in warm morning light" loading="lazy">
+    </a>
+  </div>
 </section>
 
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <span class="brand">AHMAR SAFDAR</span>
-    <span>© <span data-year>2026</span> · Freelance video editor</span>
-    <a href="index.html#films">Back to all films</a>
+    <span class="logo">AHMAR<svg class="spark" aria-hidden="true"><use href="#spark"/></svg></span>
+    <span>© <span data-year>2026</span> · Freelance video editor · Faisalabad</span>
+    <a href="index.html#work">Back to all work</a>
   </div>
 </footer>
 

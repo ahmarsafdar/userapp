@@ -4,137 +4,83 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ahmar Safdar — Freelance Video Editor</title>
-<meta name="description" content="Ahmar Safdar is a freelance video editor from Faisalabad, Pakistan, cutting commercials, concept films, social reels and motion graphics that sell.">
+<meta name="description" content="Ahmar Safdar is a freelance video editor from Faisalabad, Pakistan, making commercials, reels and motion graphics people actually watch.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Ahmar Safdar — Freelance Video Editor">
+<meta property="og:title" content="Ahmar Safdar — I make ads people actually watch">
 <meta property="og:description" content="Commercials, concept films, social reels and motion graphics — edits made to sell.">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#FFE74C">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+<svg width="0" height="0" style="position: absolute" aria-hidden="true">
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></symbol>
+  <symbol id="play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+</svg>
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header">
   <div class="wrap">
-    <a class="logo" href="#top">AHMAR SAFDAR</a>
+    <a class="logo" href="#top" aria-label="Ahmar Safdar, back to top">AHMAR<svg class="spark" aria-hidden="true"><use href="#spark"/></svg></a>
     <nav class="nav" aria-label="Primary">
-      <a href="#films">Films</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a class="pill" href="#work">Work</a>
+      <a class="pill" href="#about">About</a>
+      <a class="pill" href="#contact">Contact</a>
     </nav>
-    <a class="header-cta" href="#contact">Book a call</a>
+    <a class="btn btn-ink btn-sm btn-hire" href="#contact">Hire me!</a>
   </div>
 </header>
 
 <main id="main">
 
-<section id="top" class="hero" aria-label="Now playing">
-  <video class="hero-video" id="hero-video" poster="media/posters/bugatti.jpg"
-    autoplay muted loop playsinline preload="auto" aria-label="Bugatti Tourbillon — Frozen Edition, concept film"></video>
-  <div class="hero-scrim" aria-hidden="true"></div>
-  <div class="hero-bottom">
-    <div class="wrap">
-      <div class="hero-title">
-        <p class="eyebrow">Freelance video editor — Faisalabad, Pakistan</p>
-        <h1>I cut films<br>that move.</h1>
-      </div>
-      <div class="now-playing" aria-live="polite">
-        <p class="eyebrow">Now playing · <span id="now-num">02</span></p>
-        <p class="now-title" id="now-title">Bugatti Tourbillon — Frozen Edition</p>
-        <p class="now-meta" id="now-meta">Concept film · unofficial · 0:30</p>
-        <div class="hero-controls">
-          <button type="button" class="btn btn-ghost" id="sound-toggle" aria-pressed="false">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
-            <span>Sound on</span>
-          </button>
-          <button type="button" class="btn btn-ghost" id="play-toggle" aria-label="Pause video">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>
-            <span>Pause</span>
-          </button>
-        </div>
+<section id="top" class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div class="hero-text">
+      <h1 id="hero-title">I make <span class="hl-box">ads</span> people actually <span class="hl-line">watch.</span></h1>
+      <p class="hero-lead">Hey, I'm Ahmar — a freelance video editor from Faisalabad, Pakistan, making commercials, reels and motion graphics that stop the scroll and sell.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-ink" href="#work">See my work</a>
+        <button type="button" class="btn" data-intro><svg class="spark" aria-hidden="true"><use href="#play"/></svg>Watch my intro</button>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="films" class="films" aria-label="Choose a film">
-  <div class="wrap">
-    <div class="films-top">
-      <span id="film-count">Choose a film</span>
-      <div class="strip-arrows">
-        <button type="button" class="strip-arrow" data-strip="-1" aria-label="Scroll films left">←</button>
-        <button type="button" class="strip-arrow" data-strip="1" aria-label="Scroll films right">→</button>
-      </div>
-    </div>
-    <div class="strip" id="strip"></div>
-  </div>
-</section>
-
-<section class="panel" aria-labelledby="p-aurelia">
-  <img src="media/posters/aurelia.jpg" alt="Aurelia Air plane flying above golden clouds" loading="lazy">
-  <div class="panel-scrim" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="panel-body">
-      <span class="panel-num" aria-hidden="true" data-num-for="aurelia">01</span>
-      <h2 id="p-aurelia">Aurelia Air</h2>
-      <p class="eyebrow">Airline commercial · 0:30</p>
-      <p>A golden-hour flight above the clouds, a first-class cabin and fine dining — “Experience travel redefined.”</p>
-      <button type="button" class="btn btn-light" data-play="aurelia"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
+    <div class="hero-photo">
+      <figure class="polaroid">
+        <img src="media/portrait.jpg" alt="Portrait of Ahmar Safdar" width="720" height="899">
+        <figcaption>That's me!</figcaption>
+      </figure>
+      <div class="sticker" aria-hidden="true">5 years<br>editing</div>
+      <button type="button" class="btn btn-pink btn-sm intro-chip" data-intro><svg class="spark" aria-hidden="true"><use href="#play"/></svg>1-min intro</button>
     </div>
   </div>
 </section>
 
-<section class="panel panel--right" aria-labelledby="p-ember">
-  <img src="media/posters/ember.jpg" alt="Ember No. 7 perfume bottle among embers and smoke" loading="lazy">
-  <div class="panel-scrim" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="panel-body">
-      <span class="panel-num" aria-hidden="true" data-num-for="ember">03</span>
-      <h2 id="p-ember">Ember No. 7</h2>
-      <p class="eyebrow">Fragrance commercial · 0:30</p>
-      <p>A dark, sensual perfume ad — embers, smoke and rose petals on water around a slow reveal of the bottle.</p>
-      <button type="button" class="btn btn-light" data-play="ember"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
+<div class="band" aria-hidden="true">
+  <div class="band-inner">
+    <div class="band-track">
+      <span>Commercials <svg class="spark s-pink"><use href="#spark"/></svg> Concept films <svg class="spark s-green"><use href="#spark"/></svg> Reels &amp; shorts <svg class="spark s-blue"><use href="#spark"/></svg> Motion graphics <svg class="spark s-orange"><use href="#spark"/></svg> CEO reels <svg class="spark s-pink"><use href="#spark"/></svg> Real estate <svg class="spark s-green"><use href="#spark"/></svg> Color grading <svg class="spark s-blue"><use href="#spark"/></svg> Sound design <svg class="spark s-orange"><use href="#spark"/></svg></span>
+      <span>Commercials <svg class="spark s-pink"><use href="#spark"/></svg> Concept films <svg class="spark s-green"><use href="#spark"/></svg> Reels &amp; shorts <svg class="spark s-blue"><use href="#spark"/></svg> Motion graphics <svg class="spark s-orange"><use href="#spark"/></svg> CEO reels <svg class="spark s-pink"><use href="#spark"/></svg> Real estate <svg class="spark s-green"><use href="#spark"/></svg> Color grading <svg class="spark s-blue"><use href="#spark"/></svg> Sound design <svg class="spark s-orange"><use href="#spark"/></svg></span>
     </div>
   </div>
-</section>
+</div>
 
-<section class="panel" aria-labelledby="p-beyond">
-  <img src="media/posters/beyondliving.jpg" alt="A cliffside villa above the ocean at sunset" loading="lazy">
-  <div class="panel-scrim" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="panel-body">
-      <span class="panel-num" aria-hidden="true" data-num-for="beyondliving">04</span>
-      <h2 id="p-beyond">Beyond Living</h2>
-      <p class="eyebrow">Real-estate film · 0:30</p>
-      <p>A cliffside villa, an infinity pool and a sunset walk, closing on “Experience extraordinary living.”</p>
-      <button type="button" class="btn btn-light" data-play="beyondliving"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
-    </div>
-  </div>
-</section>
-
-<section class="panel panel--right panel--bright" aria-labelledby="p-psych">
-  <img src="media/posters/psychologist.jpg" alt="A level-up screen from the Think Like a Psychologist animation" loading="lazy">
-  <div class="panel-scrim" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="panel-body wide">
-      <span class="panel-num" aria-hidden="true" data-num-for="psychologist">06</span>
-      <h2 id="p-psych" class="long">Think Like a Psychologist</h2>
-      <p class="eyebrow">2D animated explainer · 0:45</p>
-      <p>Doodle characters, kinetic type and game-style “level up” moments that make psychology feel practical.</p>
-      <button type="button" class="btn btn-light" data-play="psychologist"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
-    </div>
-  </div>
-</section>
-
-<section id="scroll" class="reels" aria-labelledby="reels-title">
+<section id="work" class="work" aria-labelledby="work-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="reels-title" class="display h-section">Made for the scroll</h2>
-      <p class="eyebrow">9:16 · Reels · TikTok · Shorts</p>
+      <h2 id="work-title" class="h2">The good stuff</h2>
+      <span class="tag-sticker" id="project-count">Loading…</span>
+    </div>
+    <div class="work-grid" id="work-grid"></div>
+  </div>
+</section>
+
+<section id="reels" class="reels" aria-labelledby="reels-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="reels-title" class="h2">Made for the scroll</h2>
+      <span class="tag-sticker">Reels · TikTok · Shorts</span>
     </div>
     <div class="reel-grid" id="reel-grid"></div>
   </div>
@@ -143,11 +89,10 @@
 <section id="about" class="about" aria-labelledby="about-title">
   <div class="wrap">
     <div class="about-video">
-      <video src="media/films/intro.mp4" poster="media/posters/intro.jpg" controls preload="none" playsinline aria-label="Ahmar Safdar's video introduction"></video>
+      <video id="intro-video" src="media/films/intro.mp4" poster="media/posters/intro.jpg" controls preload="none" playsinline aria-label="Ahmar Safdar's video introduction"></video>
     </div>
     <div class="about-text">
-      <img class="portrait" src="media/portrait.jpg" alt="Portrait of Ahmar Safdar" width="104" height="104" loading="lazy">
-      <h2 id="about-title">Meet Ahmar</h2>
+      <h2 id="about-title" class="h2">Meet Ahmar</h2>
       <p class="lead">A one-minute hello from the edit suite — how I work, what I love cutting, and why every frame matters.</p>
       <p class="bio">I'm Ahmar Safdar, a freelance video editor from Faisalabad, Pakistan, with five years of cutting commercials, concept films, social reels and motion graphics. My job isn't just to make footage look good — it's to create something that sells: a hook that stops the scroll, a story people remember and an ending that makes them act. Most edits are back within a day, in Urdu or English.</p>
       <ul class="facts">
@@ -155,7 +100,13 @@
         <li>1-day turnaround</li>
         <li>Urdu · English</li>
       </ul>
-      <p class="tools">Premiere Pro · DaVinci Resolve · After Effects · Final Cut Pro · Audition</p>
+      <ul class="tools" aria-label="Tools I use">
+        <li>Premiere Pro</li>
+        <li>DaVinci Resolve</li>
+        <li>After Effects</li>
+        <li>Final Cut Pro</li>
+        <li>Audition</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -163,40 +114,40 @@
 <section class="services" aria-labelledby="services-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="services-title" class="display h-section">What I do</h2>
-      <p class="lead">Every edit has one job: <span class="gold">to create something that sells.</span></p>
+      <h2 id="services-title" class="h2">What I do</h2>
+      <p class="tagline">Every edit has one job: <mark>to create something that sells.</mark></p>
     </div>
     <div class="service-grid">
-      <div class="service">
-        <p class="eyebrow">01</p>
+      <article class="service c-pink">
+        <span class="num">01</span>
         <h3>Commercials</h3>
         <p>Product, airline, fragrance and household ads cut for pace and a product that looks its best.</p>
-      </div>
-      <div class="service">
-        <p class="eyebrow">02</p>
+      </article>
+      <article class="service c-blue">
+        <span class="num">02</span>
         <h3>Concept films</h3>
         <p>Cinematic spec pieces and brand films with mood, music and a strong final line.</p>
-      </div>
-      <div class="service">
-        <p class="eyebrow">03</p>
+      </article>
+      <article class="service c-orange">
+        <span class="num">03</span>
         <h3>Social &amp; CEO reels</h3>
         <p>Vertical Reels, TikToks and talking-head reels with hooks, kinetic captions and b-roll.</p>
-      </div>
-      <div class="service">
-        <p class="eyebrow">04</p>
+      </article>
+      <article class="service c-green">
+        <span class="num">04</span>
         <h3>Motion graphics</h3>
         <p>2D animation and UI walkthroughs that explain a product in under a minute.</p>
-      </div>
-      <div class="service">
-        <p class="eyebrow">05</p>
+      </article>
+      <article class="service c-white">
+        <span class="num">05</span>
         <h3>Color grading</h3>
         <p>From clean correction to a signature look, consistent across every shot.</p>
-      </div>
-      <div class="service">
-        <p class="eyebrow">06</p>
+      </article>
+      <article class="service c-pink">
+        <span class="num">06</span>
         <h3>Sound design</h3>
         <p>Music edits, clean dialogue and sound effects that make every cut land.</p>
-      </div>
+      </article>
     </div>
   </div>
 </section>
@@ -204,14 +155,15 @@
 <section id="contact" class="contact" aria-labelledby="contact-title">
   <div class="wrap">
     <div class="contact-intro">
-      <h2 id="contact-title">Let's make your next film.</h2>
+      <h2 id="contact-title" class="contact-title">Got footage?<br>Let's talk!</h2>
       <p class="lead">Tell me about the footage, the deadline and where it will live — I usually reply within a day.</p>
       <a class="email-link" href="mailto:sme16648@gmail.com">sme16648@gmail.com</a>
       <div class="contact-links">
-        <a class="btn btn-gold" href="https://www.fiverr.com/s/Q22Lg9p" target="_blank" rel="noopener">Hire me on Fiverr</a>
+        <a class="btn btn-ink btn-email" href="mailto:sme16648@gmail.com">Email me</a>
+        <a class="btn btn-yellow" href="https://www.fiverr.com/s/Q22Lg9p" target="_blank" rel="noopener">Hire on Fiverr</a>
         <!-- Add Instagram / YouTube when ready:
-        <a class="btn btn-ghost" href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener">Instagram</a>
-        <a class="btn btn-ghost" href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener">YouTube</a>
+        <a class="btn" href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn" href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener">YouTube</a>
         -->
       </div>
     </div>
@@ -241,7 +193,7 @@
         <label for="c-msg">About the project</label>
         <textarea id="c-msg" name="message" rows="4" placeholder="What are we making, and when do you need it?" required></textarea>
       </div>
-      <button type="submit" class="btn btn-light">Send enquiry →</button>
+      <button type="submit" class="btn btn-ink">Send it →</button>
       <p class="form-status" id="form-status" role="status"></p>
     </form>
   </div>
@@ -251,11 +203,22 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <span class="brand">AHMAR SAFDAR</span>
-    <span>© <span data-year>2026</span> · Freelance video editor</span>
+    <span class="logo">AHMAR<svg class="spark" aria-hidden="true"><use href="#spark"/></svg></span>
+    <span>© <span data-year>2026</span> · Freelance video editor · Faisalabad</span>
     <a href="#top">Back to top ↑</a>
   </div>
 </footer>
+
+<dialog class="player" id="player" aria-labelledby="player-title">
+  <div class="player-head">
+    <div>
+      <h2 id="player-title"></h2>
+      <p class="player-meta" id="player-meta"></p>
+    </div>
+    <button type="button" class="player-close" data-close-player aria-label="Close video">×</button>
+  </div>
+  <video id="player-video" controls playsinline></video>
+</dialog>
 
 <script src="assets/main.js"></script>
 <script src="assets/owner.js"></script>
