@@ -1,0 +1,20 @@
+{
+  "films": [
+    {"id":"aurelia","title":"Aurelia Air","short":"Aurelia Air","type":"Airline commercial","length":"0:30","format":"wide","src":"media/films/aurelia.mp4","poster":"media/posters/aurelia.jpg"},
+    {"id":"bugatti","title":"Bugatti Tourbillon — Frozen Edition","short":"Bugatti","type":"Concept film · unofficial","length":"0:30","format":"wide","src":"media/films/bugatti.mp4","poster":"media/posters/bugatti.jpg","start":true},
+    {"id":"ember","title":"Ember No. 7","short":"Ember No. 7","type":"Fragrance commercial","length":"0:30","format":"wide","src":"media/films/ember.mp4","poster":"media/posters/ember.jpg"},
+    {"id":"beyondliving","title":"Beyond Living","short":"Beyond Living","type":"Real-estate film","length":"0:30","format":"wide","src":"media/films/beyondliving.mp4","poster":"media/posters/beyondliving.jpg"},
+    {"id":"lumea","title":"Luméa Vitamin C Serum","short":"Luméa","type":"Skincare commercial","length":"0:30","format":"wide","src":"media/films/lumea.mp4","poster":"media/posters/lumea.jpg"},
+    {"id":"psychologist","title":"Think Like a Psychologist","short":"Psychologist","type":"2D animated explainer","length":"0:45","format":"wide","src":"media/films/psychologist.mp4","poster":"media/posters/psychologist.jpg"},
+    {"id":"nexora","title":"Nexora AI","short":"Nexora AI","type":"Tech commercial","length":"0:30","format":"wide","src":"media/films/nexora.mp4","poster":"media/posters/nexora.jpg"},
+    {"id":"lemonmax","title":"Lemon Max","short":"Lemon Max","type":"Household product ad","length":"0:56","format":"wide","src":"media/films/lemonmax.mp4","poster":"media/posters/lemonmax.jpg"},
+    {"id":"brighto","title":"Brighto","short":"Brighto","type":"Toothpaste commercial","length":"0:30","format":"wide","src":"media/films/brighto.mp4","poster":"media/posters/brighto.jpg"},
+    {"id":"merrymaids","title":"Merry Maids","short":"Merry Maids","type":"Service commercial","length":"0:30","format":"wide","src":"media/films/merrymaids.mp4","poster":"media/posters/merrymaids.jpg"},
+    {"id":"firstmoment","title":"The First Moment","short":"The First Moment","type":"Coffee commercial","length":"0:30","format":"wide","src":"media/films/firstmoment.mp4","poster":"media/posters/firstmoment.jpg"},
+    {"id":"sasify","title":"Sasify Solutions","short":"Sasify","type":"Motion graphics explainer","length":"0:33","format":"wide","src":"media/films/sasify.mp4","poster":"media/posters/sasify.jpg"},
+    {"id":"vanta","title":"VANTA","short":"VANTA","type":"Product ad","length":"0:27","format":"vertical","src":"media/films/vanta.mp4","poster":"media/posters/vanta.jpg","link":"vanta.html"},
+    {"id":"kahwa","title":"Kahwa & Co.","short":"Kahwa & Co.","type":"Product ad","length":"0:30","format":"vertical","src":"media/films/kahwa.mp4","poster":"media/posters/kahwa.jpg"},
+    {"id":"shahan","title":"Shahan Associates","short":"Shahan Associates","type":"CEO reel","length":"0:55","format":"vertical","src":"media/films/shahan.mp4","poster":"media/posters/shahan.jpg"},
+    {"id":"lumea-vertical","title":"Luméa","short":"Luméa","type":"Skincare ad","length":"0:30","format":"vertical","src":"media/films/lumea-vertical.mp4","poster":"media/posters/lumea-vertical.jpg"}
+  ]
+}

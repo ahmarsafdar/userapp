@@ -4,10 +4,32 @@ The portfolio website of Ahmar Safdar, a freelance video editor from Faisalabad,
 
 It is a static site: plain HTML, CSS and JavaScript with no build step.
 
-| Page | What's on it |
+| File | What it is |
 | --- | --- |
-| `index.html` | Home page: full-screen film player, 12-film selector, featured films, vertical reels, about, services and contact |
+| `index.html` | Home page: full-screen film player, film strip, featured films, vertical reels, about, services and contact |
 | `vanta.html` | VANTA case study |
+| `films.json` | The list of films shown on the home page, in display order |
+| `assets/owner.js` | Owner mode for adding and removing films from the live site |
+
+## Adding films from the website (owner only)
+
+1. Open your live site with `#owner` at the end of the address, e.g. `https://ahmarsafdar.github.io/userapp/#owner`.
+2. Paste a GitHub key. Make it at [github.com/settings/personal-access-tokens/new](https://github.com/settings/personal-access-tokens/new):
+   - Under **Repository access**, choose **Only select repositories → userapp**.
+   - Under **Permissions**, give **Contents** "Read and write" access.
+
+   The key stays in that browser only, so do this once on each device you use.
+3. Click **+ Add film** and choose an MP4. Wide videos go in the film strip and vertical ones go in "Made for the scroll".
+4. Slide to pick the cover frame, then add a title and type.
+5. To take a film down, click the **×** on it.
+
+Each change is saved to this repository as one commit. GitHub Pages republishes the site about a minute later.
+
+Visitors never see the owner buttons. Without a key that can write to this repository, nothing can be changed.
+
+**Video tips:**
+- Export MP4 (H.264) at 1080p or 720p, around 5–8 Mbit/s.
+- The limit is 50 MB per video; smaller files load faster for visitors.
 
 ## Preview locally
 
@@ -15,7 +37,7 @@ It is a static site: plain HTML, CSS and JavaScript with no build step.
 python3 -m http.server 8000
 ```
 
-Then open http://localhost:8000. Opening `index.html` directly also works.
+Then open http://localhost:8000. The film list is loaded from `films.json`, so open the site through a server rather than double-clicking `index.html`.
 
 ## Publish
 
@@ -23,16 +45,16 @@ Then open http://localhost:8000. Opening `index.html` directly also works.
 
 1. Go to **Settings → Pages**.
 2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Pick this branch and the `/ (root)` folder.
+3. Pick the default branch and the `/ (root)` folder.
 
-The site appears at `https://<username>.github.io/<repo>/` within a minute or two.
+Owner mode saves to the default branch, so Pages must publish from that branch for new films to appear.
 
-**Netlify:** drag this folder onto https://app.netlify.com/drop. Netlify also lets you connect a custom domain.
+## Editing by hand
 
-## Editing
-
-- **Films in the selector:** the `film-card` buttons in `index.html`. Each one sets its video, poster, title and meta through `data-*` attributes, and `assets/main.js` reads them.
-- **Videos and posters:** `media/films/` (H.264 MP4, 720p) and `media/posters/` (JPG).
+- **Films:** edit `films.json`. Each film has an `id`, `title`, `short` (strip label), `type`, `length`, `format` (`wide` or `vertical`), `src` and `poster`.
+  - `"start": true` picks the film that plays first.
+  - `"link"` adds a "View case study" link.
+- **Featured panels:** the four large panels in `index.html` point at films by `id` through `data-play` and `data-num-for`.
 - **Instagram / YouTube buttons:** uncomment them in the contact section of `index.html` and paste in your links.
-- **Contact form:** opens the visitor's email app with the enquiry addressed to the email in the form's `action`. No server is needed.
+- **Contact form:** opens the visitor's email app with the enquiry addressed to the email in the form's `action`.
 - **Colours and fonts:** the variables at the top of `assets/style.css`.

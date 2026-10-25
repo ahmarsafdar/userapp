@@ -33,7 +33,7 @@
 <main id="main">
 
 <section id="top" class="hero" aria-label="Now playing">
-  <video class="hero-video" id="hero-video" src="media/films/bugatti.mp4" poster="media/posters/bugatti.jpg"
+  <video class="hero-video" id="hero-video" poster="media/posters/bugatti.jpg"
     autoplay muted loop playsinline preload="auto" aria-label="Bugatti Tourbillon — Frozen Edition, concept film"></video>
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-bottom">
@@ -64,50 +64,13 @@
 <section id="films" class="films" aria-label="Choose a film">
   <div class="wrap">
     <div class="films-top">
-      <span>Choose a film · 12 films</span>
+      <span id="film-count">Choose a film</span>
       <div class="strip-arrows">
         <button type="button" class="strip-arrow" data-strip="-1" aria-label="Scroll films left">←</button>
         <button type="button" class="strip-arrow" data-strip="1" aria-label="Scroll films right">→</button>
       </div>
     </div>
-    <div class="strip" id="strip">
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/aurelia.mp4" data-poster="media/posters/aurelia.jpg" data-title="Aurelia Air" data-meta="Airline commercial · 0:30">
-        <img src="media/posters/aurelia.jpg" alt="" loading="lazy"><span>01 · Aurelia Air</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="true" data-src="media/films/bugatti.mp4" data-poster="media/posters/bugatti.jpg" data-title="Bugatti Tourbillon — Frozen Edition" data-meta="Concept film · unofficial · 0:30">
-        <img src="media/posters/bugatti.jpg" alt="" loading="lazy"><span>02 · Bugatti</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/ember.mp4" data-poster="media/posters/ember.jpg" data-title="Ember No. 7" data-meta="Fragrance commercial · 0:30">
-        <img src="media/posters/ember.jpg" alt="" loading="lazy"><span>03 · Ember No. 7</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/beyondliving.mp4" data-poster="media/posters/beyondliving.jpg" data-title="Beyond Living" data-meta="Real-estate film · 0:30">
-        <img src="media/posters/beyondliving.jpg" alt="" loading="lazy"><span>04 · Beyond Living</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/lumea.mp4" data-poster="media/posters/lumea.jpg" data-title="Luméa Vitamin C Serum" data-meta="Skincare commercial · 0:30">
-        <img src="media/posters/lumea.jpg" alt="" loading="lazy"><span>05 · Luméa</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/psychologist.mp4" data-poster="media/posters/psychologist.jpg" data-title="Think Like a Psychologist" data-meta="2D animated explainer · 0:45">
-        <img src="media/posters/psychologist.jpg" alt="" loading="lazy"><span>06 · Psychologist</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/nexora.mp4" data-poster="media/posters/nexora.jpg" data-title="Nexora AI" data-meta="Tech commercial · 0:30">
-        <img src="media/posters/nexora.jpg" alt="" loading="lazy"><span>07 · Nexora AI</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/lemonmax.mp4" data-poster="media/posters/lemonmax.jpg" data-title="Lemon Max" data-meta="Household product ad · 0:56">
-        <img src="media/posters/lemonmax.jpg" alt="" loading="lazy"><span>08 · Lemon Max</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/brighto.mp4" data-poster="media/posters/brighto.jpg" data-title="Brighto" data-meta="Toothpaste commercial · 0:30">
-        <img src="media/posters/brighto.jpg" alt="" loading="lazy"><span>09 · Brighto</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/merrymaids.mp4" data-poster="media/posters/merrymaids.jpg" data-title="Merry Maids" data-meta="Service commercial · 0:30">
-        <img src="media/posters/merrymaids.jpg" alt="" loading="lazy"><span>10 · Merry Maids</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/firstmoment.mp4" data-poster="media/posters/firstmoment.jpg" data-title="The First Moment" data-meta="Coffee commercial · 0:30">
-        <img src="media/posters/firstmoment.jpg" alt="" loading="lazy"><span>11 · The First Moment</span>
-      </button>
-      <button type="button" class="film-card" aria-pressed="false" data-src="media/films/sasify.mp4" data-poster="media/posters/sasify.jpg" data-title="Sasify Solutions" data-meta="Motion graphics explainer · 0:33">
-        <img src="media/posters/sasify.jpg" alt="" loading="lazy"><span>12 · Sasify</span>
-      </button>
-    </div>
+    <div class="strip" id="strip"></div>
   </div>
 </section>
 
@@ -116,11 +79,11 @@
   <div class="panel-scrim" aria-hidden="true"></div>
   <div class="wrap">
     <div class="panel-body">
-      <span class="panel-num" aria-hidden="true">01</span>
+      <span class="panel-num" aria-hidden="true" data-num-for="aurelia">01</span>
       <h2 id="p-aurelia">Aurelia Air</h2>
       <p class="eyebrow">Airline commercial · 0:30</p>
       <p>A golden-hour flight above the clouds, a first-class cabin and fine dining — “Experience travel redefined.”</p>
-      <button type="button" class="btn btn-light" data-play="0"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
+      <button type="button" class="btn btn-light" data-play="aurelia"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
     </div>
   </div>
 </section>
@@ -130,11 +93,11 @@
   <div class="panel-scrim" aria-hidden="true"></div>
   <div class="wrap">
     <div class="panel-body">
-      <span class="panel-num" aria-hidden="true">03</span>
+      <span class="panel-num" aria-hidden="true" data-num-for="ember">03</span>
       <h2 id="p-ember">Ember No. 7</h2>
       <p class="eyebrow">Fragrance commercial · 0:30</p>
       <p>A dark, sensual perfume ad — embers, smoke and rose petals on water around a slow reveal of the bottle.</p>
-      <button type="button" class="btn btn-light" data-play="2"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
+      <button type="button" class="btn btn-light" data-play="ember"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
     </div>
   </div>
 </section>
@@ -144,11 +107,11 @@
   <div class="panel-scrim" aria-hidden="true"></div>
   <div class="wrap">
     <div class="panel-body">
-      <span class="panel-num" aria-hidden="true">04</span>
+      <span class="panel-num" aria-hidden="true" data-num-for="beyondliving">04</span>
       <h2 id="p-beyond">Beyond Living</h2>
       <p class="eyebrow">Real-estate film · 0:30</p>
       <p>A cliffside villa, an infinity pool and a sunset walk, closing on “Experience extraordinary living.”</p>
-      <button type="button" class="btn btn-light" data-play="3"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
+      <button type="button" class="btn btn-light" data-play="beyondliving"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
     </div>
   </div>
 </section>
@@ -158,11 +121,11 @@
   <div class="panel-scrim" aria-hidden="true"></div>
   <div class="wrap">
     <div class="panel-body wide">
-      <span class="panel-num" aria-hidden="true">06</span>
+      <span class="panel-num" aria-hidden="true" data-num-for="psychologist">06</span>
       <h2 id="p-psych" class="long">Think Like a Psychologist</h2>
       <p class="eyebrow">2D animated explainer · 0:45</p>
       <p>Doodle characters, kinetic type and game-style “level up” moments that make psychology feel practical.</p>
-      <button type="button" class="btn btn-light" data-play="5"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
+      <button type="button" class="btn btn-light" data-play="psychologist"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Play film</button>
     </div>
   </div>
 </section>
@@ -173,29 +136,7 @@
       <h2 id="reels-title" class="display h-section">Made for the scroll</h2>
       <p class="eyebrow">9:16 · Reels · TikTok · Shorts</p>
     </div>
-    <div class="reel-grid">
-      <article class="reel">
-        <div class="reel-frame"><video src="media/films/vanta.mp4" poster="media/posters/vanta.jpg" controls preload="none" playsinline aria-label="VANTA sneaker ad"></video></div>
-        <p class="eyebrow">13 · Product ad · 0:27</p>
-        <h3>VANTA</h3>
-        <a class="text-link" href="vanta.html">View case study →</a>
-      </article>
-      <article class="reel">
-        <div class="reel-frame"><video src="media/films/kahwa.mp4" poster="media/posters/kahwa.jpg" controls preload="none" playsinline aria-label="Kahwa and Co. cold brew ad"></video></div>
-        <p class="eyebrow">14 · Product ad · 0:30</p>
-        <h3>Kahwa &amp; Co.</h3>
-      </article>
-      <article class="reel">
-        <div class="reel-frame"><video src="media/films/shahan.mp4" poster="media/posters/shahan.jpg" controls preload="none" playsinline aria-label="Shahan Associates CEO reel"></video></div>
-        <p class="eyebrow">15 · CEO reel · 0:55</p>
-        <h3>Shahan Associates</h3>
-      </article>
-      <article class="reel">
-        <div class="reel-frame"><video src="media/films/lumea-vertical.mp4" poster="media/posters/lumea-vertical.jpg" controls preload="none" playsinline aria-label="Luméa serum ad, vertical cut"></video></div>
-        <p class="eyebrow">16 · Skincare ad · 0:30</p>
-        <h3>Luméa</h3>
-      </article>
-    </div>
+    <div class="reel-grid" id="reel-grid"></div>
   </div>
 </section>
 
@@ -317,5 +258,6 @@
 </footer>
 
 <script src="assets/main.js"></script>
+<script src="assets/owner.js"></script>
 </body>
 </html>
