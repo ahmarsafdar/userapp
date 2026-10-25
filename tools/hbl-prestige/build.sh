@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Rebuilds media/films/hbl-prestige.mp4 and its poster.
-# Needs: ffmpeg, Node with Playwright (Chromium), Python 3 with numpy and soundfile.
+# Needs: ffmpeg, Node with Playwright (Chromium), Python 3 with numpy, scipy and soundfile.
 # SIZE=1920x1080 renders without supersampling (about twice as fast, slightly rougher edges).
-# "build.sh encode" skips rendering: it re-cuts the music and re-encodes the frames already in the work folder.
+# "build.sh encode" skips rendering: it re-makes the soundtrack and re-encodes the frames already in the work folder.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
@@ -30,18 +30,15 @@ if [ "${1:-}" != encode ]; then
   for pid in "${PIDS[@]}"; do wait "$pid"; done
 fi
 
-echo "2/3 Cutting the music"
+echo "2/3 Making the soundtrack"
 python3 "$HERE/music.py" "$WORK"
+python3 "$HERE/sfx.py" "$WORK" # adds the sound effects and masters the mix
 
 echo "3/3 Encoding"
-# two-pass loudness so the mix is turned up or down as a whole, not pumped
-LN="I=-14:TP=-1.5:LRA=11"
-MEASURED=$(ffmpeg -hide_banner -i "$WORK/mix.wav" -af "loudnorm=$LN:print_format=json" -f null - 2>&1 | sed -n '/^{/,/^}/p' |
-  python3 -c "import json, sys; d = json.load(sys.stdin); print('measured_I=%s:measured_TP=%s:measured_LRA=%s:measured_thresh=%s:offset=%s' % (d['input_i'], d['input_tp'], d['input_lra'], d['input_thresh'], d['target_offset']))")
 # CRF 21 capped at 6 Mbps comes out near 4 Mbps (about 12 MB). From CRF 23 the grain on the dark card face starts to mottle.
 ffmpeg -v error -y -framerate "$FPS" -i "$WORK/frames/%05d.jpg" -i "$WORK/mix.wav" \
-  -filter_complex "[0:v]scale=1920:1080:flags=lanczos,format=yuv420p[v];[1:a]loudnorm=$LN:$MEASURED:linear=true,aresample=48000[a]" \
-  -map "[v]" -map "[a]" -c:v libx264 -preset slow -crf 21 -maxrate 6M -bufsize 12M -profile:v high -tune film \
+  -vf scale=1920:1080:flags=lanczos,format=yuv420p -map 0:v -map 1:a \
+  -c:v libx264 -preset slow -crf 21 -maxrate 6M -bufsize 12M -profile:v high -tune film \
   -c:a aac -b:a 192k -movflags +faststart -shortest "$ROOT/media/films/hbl-prestige.mp4"
 ffmpeg -v error -y -ss 19.05 -i "$ROOT/media/films/hbl-prestige.mp4" -frames:v 1 -vf scale=1280:-2 -q:v 4 \
   "$ROOT/media/posters/hbl-prestige.jpg"

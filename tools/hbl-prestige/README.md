@@ -15,6 +15,7 @@ Everything is code. The film is a three.js scene rendered frame by frame in head
 | `render.js` | Renders frames with Playwright |
 | `music.py` | Cuts the music to the picture from the track in `music/` |
 | `music/` | "Chrome Requiem", the track the music is cut from |
+| `sfx.py` | The sound effects, synthesized and timed to the picture, and the final mix |
 | `build.sh` | Runs all of it and writes the MP4 and its poster |
 | `fonts/` | Open Sans, Barlow, Barlow Condensed and Poppins, from Google Fonts (SIL Open Font License) |
 
@@ -22,7 +23,7 @@ Everything is code. The film is a three.js scene rendered frame by frame in head
 
 ```sh
 npm i playwright && npx playwright install chromium
-pip install numpy soundfile
+pip install numpy scipy soundfile
 tools/hbl-prestige/build.sh
 ```
 
@@ -30,7 +31,7 @@ tools/hbl-prestige/build.sh
 
 It takes about 40 minutes on 4 CPU cores. The film renders on Chromium's software GPU (SwiftShader), so it looks the same on any machine. `SIZE=1920x1080 tools/hbl-prestige/build.sh` skips the supersampling and takes about half as long.
 
-`tools/hbl-prestige/build.sh encode` skips rendering: it re-cuts the music and re-encodes the frames already in the work folder, in about a minute.
+`tools/hbl-prestige/build.sh encode` skips rendering: it re-makes the soundtrack and re-encodes the frames already in the work folder, in about a minute.
 
 ## Changing things
 
@@ -39,6 +40,7 @@ It takes about 40 minutes on 4 CPU cores. The film renders on Chromium's softwar
 - **Timing:** `TIMELINE` in `src/shots.js`. From 0:06.1 the cuts land every two beats of the 128 BPM music (0.9375 s), so keep a moved cut on that grid.
 - **Look of a shot:** its `update()` returns the lens settings (focus, aperture, exposure, contrast, fade).
 - **Music:** `PIECES` in `music.py` says which part of the track plays when. To use another track, put it in `music/`, point `TRACK` at it, choose its pieces and run `build.sh encode`.
+- **Sound effects:** each one is a `put()` line in `sfx.py` giving when it plays, how loud, where it sits left to right and how much reverb it gets.
 
 ## How it was designed
 
@@ -69,5 +71,6 @@ It was reverse-engineered from Revolut's 22-second "Visual Exploration" card fil
 - The artwork was cleaned up for print: "massercord" is now "mastercard", "LAST 4 DIGIES: 111" is "LAST 4 DIGITS: 1111", "Tiems and Conditions appy" is "Terms and Conditions apply", and the layout was refitted to a real card shape.
 - The HBL letters were measured from the artwork and rebuilt as solid shapes, keeping their quirks: the H crossbar and the B's middle bar stop short of the stem, and the L's foot is cut on a slant.
 - The music is "Chrome Requiem", cut to the picture in three pieces joined on its 128 BPM beat. The bass comes in with the light, and the riser stops dead on the cut to the liquid metal. The song's own snare roll leads into its drop on the impact at 0:06.1, and every cut after that lands on a beat. Its outro carries the hero card into its last boom on the logo.
+- The sound effects are synthesized and land on the frame: a reverse swell and a low boom as the light comes on, liquid metal welling up in the silence after the riser, a splash and a gloop as it forms the card, a satin swish, the six chip pads clicking home 70 ms apart, the chip's soft landing, shimmer wherever light crosses metal, whooshes that travel with the cards, and a struck copper ring on the logo. Anything pitched is tuned to D, the song's key.
 
-**Rendering notes:** frames are rendered at 2560×1440 and scaled to 1080p so the chip's bevels and the small print don't shimmer. Anisotropic texture filtering is off because SwiftShader returns wrong samples with it on. The MP4 is H.264 at CRF 21 capped at 6 Mbps, which comes out near 4 Mbps (12 MB). That matched an 8 Mbps encode in side-by-side crops; from CRF 23 the grain on the dark card face starts to mottle.
+**Rendering notes:** frames are rendered at 2560×1440 and scaled to 1080p so the chip's bevels and the small print don't shimmer. Anisotropic texture filtering is off because SwiftShader returns wrong samples with it on. The MP4 is H.264 at CRF 21 capped at 6 Mbps, which comes out near 4 Mbps (12 MB). That matched an 8 Mbps encode in side-by-side crops; from CRF 23 the grain on the dark card face starts to mottle. The soundtrack is set to -14 LUFS, like the other films on the site, by one fixed gain and a true-peak limiter that only touches the few peaks above -2.3 dBTP, so they stay under -1 dBTP once encoded to AAC.

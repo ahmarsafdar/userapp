@@ -5,7 +5,8 @@ The track runs at 127.99 BPM to the film's 128, so its own beat carries the cuts
           snare roll, and its drop on the impact at 0:06.1. From there every cut lands on the beat.
   0:16.9  the song's outro, on the same beat: chords under the floating card, a roll, and the song's last boom on the
           logo at 0:20.63, ringing out.
-Writes mix.wav (48 kHz stereo float) to the folder given as the first argument, or next to this script."""
+Writes music.wav (48 kHz stereo float) to the folder given as the first argument, or next to this script; sfx.py
+adds the sound effects."""
 import os
 import subprocess
 import sys
@@ -48,5 +49,5 @@ for i, (start, at, fade) in enumerate(PIECES):
     src = np.round((at - start) * SR).astype(int) + on
     mix[on] += track[src] * gain[on, None]
 
-sf.write(os.path.join(OUT, 'mix.wav'), mix, SR, subtype='FLOAT')  # float: the decoded MP3 peaks just over full scale
+sf.write(os.path.join(OUT, 'music.wav'), mix, SR, subtype='FLOAT')  # float: the decoded MP3 peaks just over full scale
 print(f'ok {DUR} peak {np.abs(mix).max():.2f}')
