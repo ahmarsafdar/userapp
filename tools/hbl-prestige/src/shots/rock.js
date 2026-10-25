@@ -1,5 +1,5 @@
 // 1 ROCK (0:00–0:04.3): macro on raw stone. A crag rises left to right, a second ridge sits far out of focus behind it.
-// A rim light from the right comes up on the 2.3 s sub hit and slides round, so the shadows crawl.
+// A rim light from the right comes up at 2.3 s, as the bass comes in, and slides round, so the shadows crawl.
 import * as THREE from 'three';
 import { makeNoise, smoothstep, ease, lerp } from '../util.js';
 import { rockMaterial, heightField } from '../materials.js';

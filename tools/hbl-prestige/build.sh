@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Rebuilds media/films/hbl-prestige.mp4 and its poster.
-# Needs: ffmpeg, Node with Playwright (Chromium), Python 3 with numpy, scipy and soundfile.
+# Needs: ffmpeg, Node with Playwright (Chromium), Python 3 with numpy and soundfile.
 # SIZE=1920x1080 renders without supersampling (about twice as fast, slightly rougher edges).
-# "build.sh encode" skips rendering and the score, and re-encodes the frames and mix.wav already in the work folder.
+# "build.sh encode" skips rendering: it re-cuts the music and re-encodes the frames already in the work folder.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
@@ -28,10 +28,10 @@ if [ "${1:-}" != encode ]; then
   done
   # waited on one by one, so a crashed worker stops the build instead of encoding a film with frames missing
   for pid in "${PIDS[@]}"; do wait "$pid"; done
-
-  echo "2/3 Making the soundtrack"
-  python3 "$HERE/synth.py" "$WORK"
 fi
+
+echo "2/3 Cutting the music"
+python3 "$HERE/music.py" "$WORK"
 
 echo "3/3 Encoding"
 # two-pass loudness so the mix is turned up or down as a whole, not pumped
