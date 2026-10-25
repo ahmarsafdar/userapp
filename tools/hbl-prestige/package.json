@@ -1,0 +1,8 @@
+{
+  "name": "hbl-prestige-film",
+  "private": true,
+  "description": "Source of media/films/hbl-prestige.mp4",
+  "dependencies": {
+    "three": "0.180.0"
+  }
+}
