@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Rebuilds media/films/intro-reel.mp4 and its poster from the films in media/films.
-# Needs: ffmpeg, Node with Playwright (Chromium), Python 3 with numpy, scipy and soundfile.
+# Needs: ffmpeg, Node with Playwright (Chromium), Python 3 with numpy, scipy, soundfile and kokoro-onnx.
+# VO=off builds it without the voiceover; VO_FILE=recording.wav uses your own voice instead of the AI one.
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
@@ -38,10 +39,25 @@ wait
 
 echo "3/4 Making the soundtrack"
 python3 "$HERE/synth.py" "$WORK"
+MIX="$WORK/mix.wav"
+if [ "${VO:-on}" != "off" ]; then
+  if [ -z "${VO_FILE:-}" ] && [ ! -f "$WORK/tts/kokoro-v1.0.onnx" ]; then
+    mkdir -p "$WORK/tts"
+    for f in kokoro-v1.0.onnx voices-v1.0.bin; do
+      curl -sSL -o "$WORK/tts/$f" "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/$f"
+    done
+  fi
+  python3 "$HERE/vo.py" "$WORK" ${VO_FILE:+"$VO_FILE"}
+  MIX="$WORK/mix_vo.wav"
+fi
 
 echo "4/4 Encoding"
-ffmpeg -v error -y -framerate "$FPS" -i "$WORK/frames/%05d.jpg" -i "$WORK/mix.wav" \
-  -filter_complex "[0:v]format=yuv420p[v];[1:a]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]" \
+# two-pass loudness so the mix is turned up or down as a whole, not pumped
+LN="I=-14:TP=-1.5:LRA=11"
+MEASURED=$(ffmpeg -hide_banner -i "$MIX" -af "loudnorm=$LN:print_format=json" -f null - 2>&1 | sed -n '/^{/,/^}/p' |
+  python3 -c "import json, sys; d = json.load(sys.stdin); print('measured_I=%s:measured_TP=%s:measured_LRA=%s:measured_thresh=%s:offset=%s' % (d['input_i'], d['input_tp'], d['input_lra'], d['input_thresh'], d['target_offset']))")
+ffmpeg -v error -y -framerate "$FPS" -i "$WORK/frames/%05d.jpg" -i "$MIX" \
+  -filter_complex "[0:v]format=yuv420p[v];[1:a]loudnorm=$LN:$MEASURED:linear=true,aresample=48000[a]" \
   -map "[v]" -map "[a]" -c:v libx264 -preset slow -crf 22 -maxrate 6M -bufsize 12M -profile:v high \
   -c:a aac -b:a 192k -movflags +faststart -shortest "$ROOT/media/films/intro-reel.mp4"
 ffmpeg -v error -y -ss 7.82 -i "$ROOT/media/films/intro-reel.mp4" -frames:v 1 -vf scale=1280:-2 -q:v 4 \

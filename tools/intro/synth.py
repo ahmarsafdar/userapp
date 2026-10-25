@@ -565,7 +565,8 @@ fade = np.ones(N)
 fl = int(0.4 * SR)
 fade[-fl:] = np.linspace(1, 0, fl)
 mix *= fade[:, None]
-sf.write(os.path.join(OUT, 'music.wav'), (music / (np.abs(music).max() + 1e-9) * 0.89).astype(np.float32), SR)
-sf.write(os.path.join(OUT, 'sfx.wav'), (sfx / (np.abs(sfx).max() + 1e-9) * 0.89).astype(np.float32), SR)
+# stems keep their balance in the mix, so vo.py can remix them under the voice
+sf.write(os.path.join(OUT, 'music.wav'), (music / peak * 0.89).astype(np.float32), SR)
+sf.write(os.path.join(OUT, 'sfx.wav'), (sfx / peak * 0.89).astype(np.float32), SR)
 sf.write(os.path.join(OUT, 'mix.wav'), mix.astype(np.float32), SR)
 print('ok', N / SR, 'peak', float(np.abs(mix).max()))
