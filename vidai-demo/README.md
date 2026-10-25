@@ -15,7 +15,7 @@ Everything is code. `scene.js` poses every layer as a pure function of time
 | `scene.js` | Timeline: kinetic type, logo build, Three.js hero (phone, laptop, icons), slab camera, UI state, cursor |
 | `render.mjs` | Serves the folder, renders stills or the full frame sequence, averages motion-blur sub-frames |
 | `tools/blend.py` | Averages the sub-frames rendered for fast moves |
-| `tools/soundtrack.py` | Synthesizes the ~100 BPM bed and the SFX, timed to the picture |
+| `tools/soundtrack.py` | Synthesizes the 124.45 BPM track and the sound design, timed to the picture, and masters it to about -14 LUFS |
 | `assets/` | Vid.AI logo and style sample images from vid.ai |
 
 ## Beats
@@ -32,7 +32,7 @@ Everything is code. `scene.js` poses every layer as a pure function of time
 
 ## Render
 
-Needs Node 18+, Playwright with Chromium, Python 3 with numpy and Pillow, and ffmpeg.
+Needs Node 18+, Playwright with Chromium, Python 3 with numpy, Pillow, scipy and pedalboard, and ffmpeg.
 
 ```sh
 npm install
@@ -40,8 +40,19 @@ node render.mjs --stills 1,6,11,22       # review frames -> out/stills
 node render.mjs                          # all frames -> out/frames
 python3 tools/soundtrack.py out/soundtrack.wav
 ffmpeg -framerate 30 -i out/frames/f%05d.jpg -i out/soundtrack.wav \
-  -c:v libx264 -pix_fmt yuv420p -crf 16 -preset slow -c:a aac -b:a 192k -shortest out/vidai-demo.mp4
+  -c:v libx264 -pix_fmt yuv420p -crf 17 -preset slow -c:a aac -b:a 256k -shortest out/vidai-demo.mp4
 ```
 
 The timing tables at the top of `SLAB`, `CUR` and `CLICKS` in `scene.js` drive the camera
 and the cursor; the cue lists in `tools/soundtrack.py` use the same times.
+
+## Sound
+
+The tempo (124.45 BPM, grid offset 0.114 s) was picked so the drop, the device swap, the dive,
+the first spin and the outro land on the beat. The track runs ticking clock, turn, riser and logo
+hit, then Am9 to Fmaj9 to C to G6 with a sidechained four-on-the-floor groove, a breath of
+silence, and an outro that resolves on C under the final logo. Every spin gets a swept whoosh
+and an impact, the music closes down as the camera dives into the laptop and opens when the
+app lifts out, and interface moments (typing, clicks, toggles, checklist, export, posting)
+each have their own sound. `python3 tools/soundtrack.py out.wav [drive_db] --stems` also writes
+the stems for inspection.
