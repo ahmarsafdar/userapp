@@ -74,11 +74,11 @@
       playerVideo.load();
     });
 
-    const intro = document.getElementById('intro-video');
+    // The hero buttons play the intro reel; the About section keeps the talking-head hello.
     document.querySelectorAll('[data-intro]').forEach((btn) => {
       btn.addEventListener('click', () => openPlayer({
-        title: 'Meet Ahmar', type: 'A quick hello', length: '1:12', format: 'wide',
-        src: intro.getAttribute('src'), poster: intro.getAttribute('poster')
+        title: 'Ahmar — Intro reel', type: 'Motion graphics intro', length: '0:46', format: 'wide',
+        src: 'media/films/intro-reel.mp4', poster: 'media/posters/intro-reel.jpg'
       }));
     });
   }
