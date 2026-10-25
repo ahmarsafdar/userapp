@@ -11,6 +11,7 @@ It is a static site: plain HTML, CSS and JavaScript with no build step.
 | `films.json` | The list of films shown on the home page, in display order |
 | `assets/owner.js` | Owner mode for adding and removing films from the live site |
 | `tools/intro/` | Source of the intro reel the hero buttons play, with rebuild steps |
+| `tools/hbl-prestige/` | Source of the HBL Prestige 3D card film, with rebuild steps |
 
 ## Adding films from the website (owner only)
 
