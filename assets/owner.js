@@ -474,10 +474,17 @@
   });
 
   // ----- Remove a film -----
+  // Files still shown somewhere else on the page (outside the film cards) are kept.
+  const usedElsewhere = (path) => Array.prototype.some.call(document.querySelectorAll('[src], [poster]'), (node) =>
+    !node.closest('.work-card') && (node.getAttribute('src') === path || node.getAttribute('poster') === path));
+  const filesToDelete = (film) => (film.link ? [] : [film.src, film.poster].filter((path) => !usedElsewhere(path)));
+
   async function removeFilm(id) {
     const film = portfolio.films().find((f) => f.id === id);
     if (!film || busy) return;
-    const note = film.link ? ' Its case study page stays.' : ' Its video file is deleted too.';
+    const note = film.link ? ' Its case study page stays.'
+      : filesToDelete(film).length ? ' Its video file is deleted too.'
+      : ' Its video stays, because it is also used elsewhere on the site.';
     if (!window.confirm('Remove “' + film.title + '” from your portfolio?' + note)) return;
     setBusy(addForm, true);
     toast('Removing “' + film.title + '”…', true);
@@ -487,7 +494,7 @@
         if (!current) return { films: list };
         return {
           films: list.filter((f) => f.id !== id),
-          remove: current.link ? [] : [current.src, current.poster]
+          remove: filesToDelete(current)
         };
       }, () => {});
       showFilms(next);
