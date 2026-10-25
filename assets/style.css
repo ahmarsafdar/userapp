@@ -421,3 +421,19 @@ h1, h2, h3, p, figure { margin: 0; }
 .saas .tag-sticker { background: var(--white); transform: rotate(-3deg); }
 .saas-lead { max-width: 620px; margin-bottom: 40px; }
 .saas-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+
+/* Animated logo card in "Meet Ahmar" */
+.ident-card {
+  position: relative; display: block; width: min(380px, 100%); padding: 0; margin-bottom: 6px;
+  background: #D9D8DB; border: var(--line); border-radius: 16px; box-shadow: 6px 6px 0 var(--ink);
+  transform: rotate(2deg); cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+}
+.ident-card:hover { transform: rotate(0deg) translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink); }
+.ident-card video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 13px; }
+.ident-sticker {
+  position: absolute; top: -16px; right: -10px; padding: 6px 14px; border: var(--line); border-radius: 999px;
+  background: var(--green); color: var(--ink); font-size: 14px; font-weight: 800; text-transform: uppercase;
+  transform: rotate(6deg);
+}
+@media (max-width: 600px) { .ident-sticker { font-size: 12px; padding: 4px 10px; right: -4px; } }
+@media (prefers-reduced-motion: reduce) { .ident-card { transition: none; } }
