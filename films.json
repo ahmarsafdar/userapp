@@ -12,6 +12,7 @@
     {"id":"merrymaids","title":"Merry Maids","short":"Merry Maids","type":"Service commercial","length":"0:30","format":"wide","src":"media/films/merrymaids.mp4","poster":"media/posters/merrymaids.jpg"},
     {"id":"firstmoment","title":"The First Moment","short":"The First Moment","type":"Coffee commercial","length":"0:30","format":"wide","src":"media/films/firstmoment.mp4","poster":"media/posters/firstmoment.jpg"},
     {"id":"ident","title":"My animated logo","short":"Animated logo","type":"Logo animation","length":"0:05","format":"wide","src":"media/films/ident.mp4","poster":"media/posters/ident.jpg"},
+    {"id":"postiz","title":"Postiz — Social media on autopilot","short":"Postiz","type":"SaaS ad","length":"0:31","format":"wide","src":"media/films/postiz.mp4","poster":"media/posters/postiz.jpg","section":"saas"},
     {"id":"1lookup","title":"1lookup — Explainer","short":"1lookup","type":"SaaS explainer","length":"0:30","format":"wide","src":"media/films/1lookup.mp4","poster":"media/posters/1lookup.jpg","section":"saas"},
     {"id":"vidai","title":"vid.ai — Product Demo","short":"vid.ai","type":"SaaS product demo","length":"0:34","format":"wide","src":"media/films/vidai.mp4","poster":"media/posters/vidai.jpg","section":"saas"},
     {"id":"sasify","title":"Sasify Solutions","short":"Sasify","type":"Motion graphics explainer","length":"0:33","format":"wide","src":"media/films/sasify.mp4","poster":"media/posters/sasify.jpg","section":"saas"},
