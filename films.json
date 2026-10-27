@@ -23,6 +23,12 @@
     {"id":"vanta","title":"VANTA","short":"VANTA","type":"Product ad","length":"0:27","format":"vertical","src":"media/films/vanta.mp4","poster":"media/posters/vanta.jpg","link":"vanta.html"},
     {"id":"kahwa","title":"Kahwa & Co.","short":"Kahwa & Co.","type":"Product ad","length":"0:30","format":"vertical","src":"media/films/kahwa.mp4","poster":"media/posters/kahwa.jpg"},
     {"id":"shahan","title":"Shahan Associates","short":"Shahan Associates","type":"CEO reel","length":"0:55","format":"vertical","src":"media/films/shahan.mp4","poster":"media/posters/shahan.jpg"},
-    {"id":"lumea-vertical","title":"Luméa","short":"Luméa","type":"Skincare ad","length":"0:30","format":"vertical","src":"media/films/lumea-vertical.mp4","poster":"media/posters/lumea-vertical.jpg"}
+    {"id":"lumea-vertical","title":"Luméa","short":"Luméa","type":"Skincare ad","length":"0:30","format":"vertical","src":"media/films/lumea-vertical.mp4","poster":"media/posters/lumea-vertical.jpg"},
+    {"id":"old-macdonald","title":"Old MacDonald Had a Farm","short":"Old MacDonald","type":"Nursery rhyme · 3D animated","length":"3:08","format":"wide","src":"media/films/old-macdonald.mp4","poster":"media/posters/old-macdonald.jpg","section":"rhymes"},
+    {"id":"itsy-bitsy","title":"Itsy Bitsy Spider","short":"Itsy Bitsy Spider","type":"Nursery rhyme · 3D animated","length":"2:34","format":"wide","src":"media/films/itsy-bitsy.mp4","poster":"media/posters/itsy-bitsy.jpg","section":"rhymes"},
+    {"id":"wheels-bus","title":"The Wheels on the Bus","short":"Wheels on the Bus","type":"Nursery rhyme · 3D animated","length":"3:00","format":"wide","src":"media/films/wheels-bus.mp4","poster":"media/posters/wheels-bus.jpg","section":"rhymes"},
+    {"id":"ducks-1","title":"Duck family — shot 1","short":"Duck shot 1","type":"Animated shot","length":"0:15","format":"wide","src":"media/films/ducks-1.mp4","poster":"media/posters/ducks-1.jpg","section":"rhymes"},
+    {"id":"ducks-2","title":"Duck family — shot 2","short":"Duck shot 2","type":"Animated shot","length":"0:15","format":"wide","src":"media/films/ducks-2.mp4","poster":"media/posters/ducks-2.jpg","section":"rhymes"},
+    {"id":"ducks-3","title":"Duck family — shot 3","short":"Duck shot 3","type":"Animated shot","length":"0:15","format":"wide","src":"media/films/ducks-3.mp4","poster":"media/posters/ducks-3.jpg","section":"rhymes"}
   ]
 }

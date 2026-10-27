@@ -6,7 +6,8 @@
   // Films whose "section" matches a key here go in that section; the rest are sorted by shape.
   const THEMED = {
     saas: { colors: ['white', 'blue', 'green', 'pink'] },
-    health: { colors: ['white', 'yellow', 'pink', 'blue'] }
+    health: { colors: ['white', 'yellow', 'pink', 'blue'] },
+    rhymes: { colors: ['white', 'pink', 'blue', 'green'] }
   };
   const TILTS = ['0deg', '1deg', '0deg', '-1deg'];
 

@@ -443,3 +443,9 @@ h1, h2, h3, p, figure { margin: 0; }
 .health .section-head { margin-bottom: 16px; }
 .health .tag-sticker { background: var(--white); transform: rotate(3deg); }
 .section-lead { max-width: 620px; margin-bottom: 40px; }
+
+/* Nursery rhymes */
+.rhymes { background: var(--yellow); border-bottom: var(--line); padding: var(--section) 0; }
+.rhymes .section-head { margin-bottom: 16px; }
+.rhymes .tag-sticker { background: var(--white); transform: rotate(-3deg); }
+.rhymes-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
