@@ -7,7 +7,8 @@
   const THEMED = {
     saas: { colors: ['white', 'blue', 'green', 'pink'] },
     health: { colors: ['white', 'yellow', 'pink', 'blue'] },
-    rhymes: { colors: ['white', 'pink', 'blue', 'green'] }
+    rhymes: { colors: ['white', 'pink', 'blue', 'green'] },
+    ducks: { colors: ['white', 'yellow', 'pink'] }
   };
   const TILTS = ['0deg', '1deg', '0deg', '-1deg'];
 
